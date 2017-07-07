@@ -1,0 +1,26 @@
+<div class="listaDeItens text-center">
+	<ul>
+		<li ng-repeat="unidade in unidadesMilitaresSemEra">
+			<div class="card">
+				<img class="avatar" src="{{unidade.Imagem}}" width="100px;">
+				<h4><b>{{unidade.Nome}}</b></h4>
+				<hr>
+				<p><b>Tipo: </b><img class="tipo_icone" src="{{unidade.TipoIcone}}">{{unidade.Tipo}}</p>
+				<p><b>Era: </b>{{unidade.Era}}</p>
+				<p><b>Ataque: </b>{{unidade.Ataque}}</p>
+				<p><b>Defesa: </b>{{unidade.Defesa}}</p>
+				<p><b>Alcance: </b>{{unidade.Alcance}}</p>
+				<p><b>Movimento: </b>{{unidade.Movimento}}</p>
+				<hr>
+				
+				<ul>
+					<li ng-repeat="hab in unidade.Habilidades">
+						<p ng-show="hab != null"><b>{{hab.Nome}}: </b> {{hab.Desc}}</p>
+					</li>
+				</ul>
+				
+			</div>
+		</li>
+	</ul>
+	<div style="clear: both"></div>
+</div>
