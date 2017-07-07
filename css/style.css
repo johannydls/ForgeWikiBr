@@ -1,0 +1,51 @@
+
+.site {
+	background-image: url(../img/bg1.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.body {
+	background-color: rgba(255, 255, 255, 0.85);
+	width: 864px;
+	margin: 0 auto;
+	border-radius: 7px;
+}
+
+.titulo {
+	font-variant: small-caps;
+	font-family: Arial;
+	font-weight: 900;
+	text-shadow: 1px 1px 3px #f16667;
+}
+
+#menu ul {
+	padding: 0px;
+	margin: 0px;
+	background-color: #EDEDED;
+	list-style: none;
+}
+
+#menu ul li {
+	display: inline;
+}
+
+#menu ul li a {
+	padding: 10px 10px;
+	display: inline-block;
+
+	/*Visual do link*/
+	background-color: #EDEDED;
+	color: #333;
+	text-decoration: none;
+	border-bottom: 3px solid #EDEDED;
+
+	font-variant: small-caps;
+	font-weight: 600;
+}
+
+#menu ul li a:hover {
+	background-color: rgba(214,214,214,0.7);
+	color: #6D6D6D;
+	border-bottom: 3px solid #560000;
+}

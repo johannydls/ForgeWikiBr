@@ -1,0 +1,57 @@
+{
+  "Eras" : {
+    "SemEra" : {
+      "UnidadeMilitar" : [ null, {
+        "Alcance" : 1,
+        "Ataque" : 10,
+        "Defesa" : 10,
+        "Habilidades" : {
+          "Moral" : "Todas as unidades aliadas iniciam a batalha com 1 ponto de armadura. Não acumula",
+          "Rali" : "Todas as unidades aliadas iniciam a batalha com +6% de bônus de ataque e defesa. Não acumula"
+        },
+        "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FunidadesMilitares%2FsemEra%2F1.png?alt=media&token=c2356573-cd91-49db-bd12-43b8905362d0",
+        "Movimento" : 14,
+        "Nome" : "Baterista Militar",
+        "Tipo" : "Unidade Ligeira"
+      }, {
+        "Alcance" : 1,
+        "Ataque" : 11,
+        "Defesa" : 11,
+        "Habilidades" : {
+          "Rali" : "Todas as unidades aliadas iniciam a batalha com +12% de bônus de araque e defesa. Não acumula"
+        },
+        "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FunidadesMilitares%2FsemEra%2F2.png?alt=media&token=5284d865-9a59-43ca-b02d-874fdea14947",
+        "Movimento" : 12,
+        "Nome" : "Guarda-bandeira",
+        "Tipo" : "Unidade pesada"
+      }, {
+        "Alcance" : 1,
+        "Ataque" : 100,
+        "Defesa" : 1,
+        "Habilidades" : {
+          "Identidade Secreta" : "Ignora primeiro dano e transforma-se em outra unidade do seu exército. Morre se não houver unidades restantes sem identidade secreta"
+        },
+        "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FunidadesMilitares%2FsemEra%2F3.png?alt=media&token=efc85e19-bc7e-4864-8fff-786ddb8e2861",
+        "Movimento" : 14,
+        "Nome" : "Agente Secreto",
+        "Tipo" : "Unidade Ligeira"
+      } ]
+    }
+  },
+  "Tipos de Unidades" : [ null, {
+    "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2F1.png?alt=media&token=c8c97da3-f382-4f9a-8e83-17d4c1ed79d6",
+    "Nome" : "Unidade rápida"
+  }, {
+    "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2F2.png?alt=media&token=c98c6e86-93b7-4e55-a8a0-de7f4794a44f",
+    "Nome" : "Unidade pesada"
+  }, {
+    "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2F3.png?alt=media&token=29e196f9-71a8-41f1-9ca5-8e0a838d9e66",
+    "Nome" : "Unidade ligeira"
+  }, {
+    "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2F4.png?alt=media&token=6259659e-514c-4d6f-85c1-24f28d10990e",
+    "Nome" : "Unidade de artilharia"
+  }, {
+    "Imagem" : "https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2F5.png?alt=media&token=f7524bce-5ae6-4ff1-9e9c-0df8d423b029",
+    "Nome" : "Unidade de curto alcance"
+  } ]
+}
