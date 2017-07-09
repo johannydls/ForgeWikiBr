@@ -28,9 +28,8 @@ app.controller('pageController', ['$scope','$firebaseArray', function($scope, $f
 
 	firebase.initializeApp(config);
 
-	var rootRef = firebase.database().ref().child('Eras').child('SemEra').child('UnidadeMilitar');
+	var rootRef = firebase.database().ref().child('Eras');
 
-	$scope.unidadesMilitaresSemEra = $firebaseArray(rootRef);
+	$scope.unidadesMilitaresSemEra = $firebaseArray(rootRef.child('SemEra').child('UnidadeMilitar'));
 
-	$scope.usuario = "Johanny LS";
 }]);

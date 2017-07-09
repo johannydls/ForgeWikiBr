@@ -1,25 +1,102 @@
 <div class="listaDeItens text-center">
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<select ng-model="filtroEra" class="form-control">
+					<option value="">Todas as Eras</option>
+					<option value="Sem era definida" default>Sem era definida</option>
+					<option value="Idade da Pedra">Idade da Pedra</option>
+					<option value="Idade do Bronze">Idade do Bronze</option>
+					<option value="Idade do Ferro">Idade do Ferro</option>
+					<option value="Início da Idade Média">Início da Idade Média</option>
+					<option value="Alta Idade Média">Alta Idade Média</option>
+					<option value="Finais da Idade Media">Finais da Idade Media</option>
+					<option value="Era Industrial">Era Industrial</option>
+					<option value="Era Progressiva">Era Progressiva</option>
+					<option value="Era Moderna">Era Moderna</option>
+					<option value="Era Pós-Moderna">Era Pós-Moderna</option>
+					<option value="Era Contemporânea">Era Contemporânea</option>
+					<option value="Amanhã">Amanhã</option>
+					<option value="Futuro">Futuro</option>
+					<option value="Futuro Ártico">Futuro Ártico</option>
+					<option value="Futuro Oceânico">Futuro Oceânico</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<select ng-model="filtroUnidade" class="form-control" >
+					<option value="">Todas as Unidades</option>
+					<option value="Unidade Ligeira">Unidade Ligeira</option>
+					<option value="Unidade Pesada">Unidade Pesada</option>
+					<option value="Unidade Rápida">Unidade Rápida</option>
+					<option value="Unidade de Artilharia">Unidade de Artilharia</option>
+					<option value="Unidade de Curto Alcance">Unidade de Curto Alcance</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<br>
 	<ul>
-		<li ng-repeat="unidade in unidadesMilitaresSemEra">
+
+		
+	
+		<li ng-repeat="unidade in unidadesMilitaresSemEra | filter:filtroEra | filter:filtroUnidade">
+
+			<h1 ng-show="unidadesMilitaresSemEra.length == 0">Sem unidades</h1>
+		
 			<div class="card">
 				<img class="avatar" src="{{unidade.Imagem}}" width="100px;">
 				<h4><b>{{unidade.Nome}}</b></h4>
-				<hr>
-				<p><b>Tipo: </b><img class="tipo_icone" src="{{unidade.TipoIcone}}">{{unidade.Tipo}}</p>
-				<p><b>Era: </b>{{unidade.Era}}</p>
-				<p><b>Ataque: </b>{{unidade.Ataque}}</p>
-				<p><b>Defesa: </b>{{unidade.Defesa}}</p>
-				<p><b>Alcance: </b>{{unidade.Alcance}}</p>
-				<p><b>Movimento: </b>{{unidade.Movimento}}</p>
-				<hr>
-				
-				<ul>
-					<li ng-repeat="hab in unidade.Habilidades">
-						<p ng-show="hab != null"><b>{{hab.Nome}}: </b> {{hab.Desc}}</p>
-					</li>
-				</ul>
+				<br>
+				<table class="table table-hover text-left">
+
+					<tbody>
+						<tr>
+							<td><img src="{{unidade.TipoIcone}}"> <b>{{unidade.Tipo}}</b></td>
+						</tr>
+						<tr>
+							<td><img src="img/atb_unidades/era.png"> <b>{{unidade.Era}}</b></td>
+						</tr>
+						<tr>
+							<td><img src="img/atb_unidades/ataque.png"> <b>Ataque <span class="pull-right">{{unidade.Ataque}}</span></b></td>
+						</tr>
+						<tr>
+							<td><img src="img/atb_unidades/defesa.png"> <b>Defesa <span class="pull-right">{{unidade.Defesa}}</span></b></td>
+						</tr>
+						<tr>
+							<td><img src="img/atb_unidades/alcance.png"> <b>Alcance <span class="pull-right">{{unidade.Alcance}}</span></b></td>
+						</tr>
+						<tr>
+							<td><img src="img/atb_unidades/movimento.png"> <b>Movimento <span class="pull-right">{{unidade.Movimento}}</span></b></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<span ng-show="unidade.Habilidades">
+					<h4 class="text-left">Habilidades</h4>
+					<table class="table table-condensed thabilidades">
+						<thead>
+							<tr></tr>
+							<tr></tr>
+							<tr></tr>
+						</thead>
+
+						<tbody class="text-justify">
+							<tr ng-repeat="hab in unidade.Habilidades">
+								<td ng-show="hab != null"><img src="{{hab.Icone}}"></td>
+								<td ng-show="hab != null"><b>{{hab.Nome}}: </b>{{hab.Desc}}</td>
+								<td ng-show="hab != null && hab.ValorBonus">{{hab.ValorBonus}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</span>
 				
 			</div>
+
 		</li>
 	</ul>
 	<div style="clear: both"></div>
