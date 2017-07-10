@@ -12,11 +12,11 @@
 					<option value="Início da Idade Média">Início da Idade Média</option>
 					<option value="Alta Idade Média">Alta Idade Média</option>
 					<option value="Finais da Idade Media">Finais da Idade Media</option>
-					<option value="Era Industrial">Era Industrial</option>
-					<option value="Era Progressiva">Era Progressiva</option>
-					<option value="Era Moderna">Era Moderna</option>
-					<option value="Era Pós-Moderna">Era Pós-Moderna</option>
-					<option value="Era Contemporânea">Era Contemporânea</option>
+					<option value="Industrial">Industrial</option>
+					<option value="Progressiva">Progressiva</option>
+					<option value="Moderna">Moderna</option>
+					<option value="Pós-Moderna">Pós-Moderna</option>
+					<option value="Contemporânea">Contemporânea</option>
 					<option value="Amanhã">Amanhã</option>
 					<option value="Futuro">Futuro</option>
 					<option value="Futuro Ártico">Futuro Ártico</option>
@@ -37,22 +37,32 @@
 				</select>
 			</div>
 		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<input value="0" class="form-control" type="number" min="0" placeholder="Bônus de Ataque" ng-model="bonus_atk">
+			</div>
+		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<input class="form-control" type="number" min="0" placeholder="Bônus de Defesa" ng-model="bonus_def">
+			</div>
+		</div>
 	</div>
 
 	<br>
 	<ul>
 
-		
-	
-		<li ng-repeat="unidade in unidadesMilitaresSemEra | filter:filtroEra | filter:filtroUnidade">
-
+		<!--<li ng-repeat="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade">-->
+		<li dir-paginate="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade | itemsPerPage: 3">
 			<h1 ng-show="unidadesMilitaresSemEra.length == 0">Sem unidades</h1>
 		
 			<div class="card">
 				<img class="avatar" src="{{unidade.Imagem}}" width="100px;">
 				<h4><b>{{unidade.Nome}}</b></h4>
 				<br>
-				<table class="table table-hover text-left">
+				<table class="table text-left">
 
 					<tbody>
 						<tr>
@@ -62,10 +72,24 @@
 							<td><img src="img/atb_unidades/era.png"> <b>{{unidade.Era}}</b></td>
 						</tr>
 						<tr>
-							<td><img src="img/atb_unidades/ataque.png"> <b>Ataque <span class="pull-right">{{unidade.Ataque}}</span></b></td>
+							<td>
+								<img src="img/atb_unidades/ataque.png"> 
+								<b>Ataque 
+								<span class="pull-right">
+									{{calculaBonus(unidade.Ataque, bonus_atk) || unidade.Ataque}}
+									<span ng-show="bonus_atk != null"> (+{{bonus_atk}}%)</span>
+								</span></b>
+							</td>
 						</tr>
 						<tr>
-							<td><img src="img/atb_unidades/defesa.png"> <b>Defesa <span class="pull-right">{{unidade.Defesa}}</span></b></td>
+							<td>
+								<img src="img/atb_unidades/defesa.png"> 
+								<b>Defesa 
+								<span class="pull-right">
+									{{calculaBonus(unidade.Defesa, bonus_def) || unidade.Defesa}}
+									<span ng-show="bonus_def != null"> (+{{bonus_def}}%)</span>
+								</span></b>
+							</td>
 						</tr>
 						<tr>
 							<td><img src="img/atb_unidades/alcance.png"> <b>Alcance <span class="pull-right">{{unidade.Alcance}}</span></b></td>
@@ -76,8 +100,46 @@
 					</tbody>
 				</table>
 
+				<span ng-show="unidade.BonusAtaque">
+					<h4 class="text-left"><b>Bonus de Ataque</b></h4>
+					<table class="table table-condensed tbonus">
+						<thead>
+							<tr></tr>
+							<tr></tr>
+							<tr></tr>
+						</thead>
+
+						<tbody class="text-left">
+							<tr ng-repeat="bonus in unidade.BonusAtaque">
+								<td ng-show="bonus != null"><img src="{{bonus.Icone}}"></td>
+								<td ng-show="bonus != null"><b>{{bonus.Nome}}</b></td>
+								<td ng-show="bonus != null && bonus.Valor"><b>{{bonus.Valor}}</b></td>
+							</tr>
+						</tbody>
+					</table>
+				</span>
+
+				<span ng-show="unidade.BonusDefesa">
+					<h4 class="text-left"><b>Bonus de Defesa</b></h4>
+					<table class="table table-condensed tbonus">
+						<thead>
+							<tr></tr>
+							<tr></tr>
+							<tr></tr>
+						</thead>
+
+						<tbody class="text-left">
+							<tr ng-repeat="bonus in unidade.BonusDefesa">
+								<td ng-show="bonus != null"><img src="{{bonus.Icone}}"></td>
+								<td ng-show="bonus != null"><b>{{bonus.Nome}}</b></td>
+								<td ng-show="bonus != null && bonus.Valor"><b>{{bonus.Valor}}</b></td>
+							</tr>
+						</tbody>
+					</table>
+				</span>
+
 				<span ng-show="unidade.Habilidades">
-					<h4 class="text-left">Habilidades</h4>
+					<h4 class="text-left"><b>Habilidades</b></h4>
 					<table class="table table-condensed thabilidades">
 						<thead>
 							<tr></tr>
@@ -85,7 +147,7 @@
 							<tr></tr>
 						</thead>
 
-						<tbody class="text-justify">
+						<tbody class="text-left">
 							<tr ng-repeat="hab in unidade.Habilidades">
 								<td ng-show="hab != null"><img src="{{hab.Icone}}"></td>
 								<td ng-show="hab != null"><b>{{hab.Nome}}: </b>{{hab.Desc}}</td>
@@ -98,6 +160,12 @@
 			</div>
 
 		</li>
+
 	</ul>
 	<div style="clear: both"></div>
+
+</div>
+<br>
+<div class="text-center">
+	<dir-pagination-controls max-size="9" boundary-links="true"></dir-pagination-controls>
 </div>
