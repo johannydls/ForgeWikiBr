@@ -12,15 +12,16 @@
 					<option value="Início da Idade Média">Início da Idade Média</option>
 					<option value="Alta Idade Média">Alta Idade Média</option>
 					<option value="Finais da Idade Media">Finais da Idade Media</option>
-					<option value="Industrial">Industrial</option>
-					<option value="Progressiva">Progressiva</option>
-					<option value="Moderna">Moderna</option>
-					<option value="Pós-Moderna">Pós-Moderna</option>
-					<option value="Contemporânea">Contemporânea</option>
-					<option value="Amanhã">Amanhã</option>
-					<option value="Futuro">Futuro</option>
-					<option value="Futuro Ártico">Futuro Ártico</option>
-					<option value="Futuro Oceânico">Futuro Oceânico</option>
+					<option value="Era Colonial">Era Colonial</option>
+					<option value="Era Industrial">Era Industrial</option>
+					<option value="Era Progressiva">Era Progressiva</option>
+					<option value="Era Moderna">Era Moderna</option>
+					<option value="Era Pós-Moderna">Era Pós-Moderna</option>
+					<option value="Era Contemporânea">Era Contemporânea</option>
+					<option value="Era do Amanhã">Era do Amanhã</option>
+					<option value="Era do Futuro">Era do Futuro</option>
+					<option value="Era do Futuro Ártico">Era do Futuro Ártico</option>
+					<option value="Era do Futuro Oceânico">Futuro Oceânico</option>
 				</select>
 			</div>
 		</div>
@@ -40,22 +41,65 @@
 
 		<div class="col-xs-6">
 			<div class="form-group">
-				<input value="0" class="form-control" type="number" min="0" placeholder="Bônus de Ataque" ng-model="bonus_atk">
+				<select ng-model="filtroBonus" class="form-control" >
+					<option value="">Todos os Bônus</option>
+					<option value="vs. Unidade Ligeira">vs. Unidade Ligeira</option>
+					<option value="vs. Unidade Pesada">vs. Unidade Pesada</option>
+					<option value="vs. Unidade Rápida">vs. Unidade Rápida</option>
+					<option value="vs. Unidade de Artilharia">vs. Unidade de Artilharia</option>
+					<option value="vs. Unidade de Curto Alcance">vs. Unidade de Curto Alcance</option>
+					<option value="No Entrincheiramento">No Entrincheiramento</option>
+				</select>
 			</div>
 		</div>
 
 		<div class="col-xs-6">
 			<div class="form-group">
-				<input class="form-control" type="number" min="0" placeholder="Bônus de Defesa" ng-model="bonus_def">
+				<select ng-model="filtroHabilidade" class="form-control" >
+					<option value="">Todas as Habilidades</option>
+					<option value="Bem de Perto">Bem de Perto</option>
+					<option value="Cavalaria Medieval">Cavalaria Medieval</option>
+					<option value="Chamado ao Dever">Chamado ao Dever</option>
+					<option value="Contato">Contato</option>
+					<option value="Entrincheirado">Entrincheirado</option>
+					<option value="Identidade Secreta">Identidade Secreta</option>
+					<option value="Moral">Moral</option>
+					<option value="Rali">Rali</option>
+				</select>
 			</div>
 		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<input class="form-control" type="text" placeholder="Filtrar por nome" ng-model="filterNome">
+			</div>
+		</div>
+
+		<div class="col-xs-6">
+			
+			<div class="row">
+				
+				<div class="col-xs-6">
+					<div class="form-group">
+						<input value="0" class="form-control" type="number" min="0" placeholder="Bônus de Ataque" ng-model="bonus_atk">
+					</div>
+				</div>
+
+				<div class="col-xs-6">
+					<div class="form-group">
+						<input class="form-control" type="number" min="0" placeholder="Bônus de Defesa" ng-model="bonus_def">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
 
 	<br>
 	<ul>
 
-		<!--<li ng-repeat="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade">-->
-		<li dir-paginate="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade | itemsPerPage: 3">
+		<li dir-paginate="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade | itemsPerPage: 3">
 			<h1 ng-show="unidadesMilitaresSemEra.length == 0">Sem unidades</h1>
 		
 			<div class="card">
@@ -113,7 +157,7 @@
 							<tr ng-repeat="bonus in unidade.BonusAtaque">
 								<td ng-show="bonus != null"><img src="{{bonus.Icone}}"></td>
 								<td ng-show="bonus != null"><b>{{bonus.Nome}}</b></td>
-								<td ng-show="bonus != null && bonus.Valor"><b>{{bonus.Valor}}</b></td>
+								<td ng-show="bonus != null && bonus.Valor">+<b>{{bonus.Valor}}</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -132,7 +176,7 @@
 							<tr ng-repeat="bonus in unidade.BonusDefesa">
 								<td ng-show="bonus != null"><img src="{{bonus.Icone}}"></td>
 								<td ng-show="bonus != null"><b>{{bonus.Nome}}</b></td>
-								<td ng-show="bonus != null && bonus.Valor"><b>{{bonus.Valor}}</b></td>
+								<td ng-show="bonus != null && bonus.Valor">+<b>{{bonus.Valor}}</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -151,7 +195,7 @@
 							<tr ng-repeat="hab in unidade.Habilidades">
 								<td ng-show="hab != null"><img src="{{hab.Icone}}"></td>
 								<td ng-show="hab != null"><b>{{hab.Nome}}: </b>{{hab.Desc}}</td>
-								<td ng-show="hab != null && hab.ValorBonus">{{hab.ValorBonus}}</td>
+								<td ng-show="hab != null && hab.Valor">+<b>{{hab.Valor}}</b></td>
 							</tr>
 						</tbody>
 					</table>

@@ -6,24 +6,30 @@ var app = angular.module('foe-wiki', ['ngRoute',
 app.config(function($routeProvider) {
 	$routeProvider
 		.when('/home', {
+			title: 'Home',
 			templateUrl: 'views/home.html'
 		})
 		.when('/unidadesMilitares', {
+			title: 'Unidades',
 			templateUrl: 'views/unidades_militares.html',
 			controller: 'unidadesController'
 		})
 		.when('/login', {
+			title: 'Login',
 			templateUrl: 'views/login.html',
 			controller: 'loginController'
 		})
 		.when('/gerenciador', {
+			title: 'Gerenciador',
 			templateUrl: 'views/gerenciador.html',
 			controller: 'gerenciadorController'
 		})
 		.when('/eventos', {
+			title: 'Eventos',
 			templateUrl: 'views/eventos.html'
 		})
 		.when('/edificios', {
+			title: 'Edifícios',
 			templateUrl: 'views/edificios.html'
 		})
 		.otherwise({ 
@@ -95,8 +101,8 @@ app.controller('loginController', ['$scope', 'bd_app', function($scope, bd_app) 
 
 }]);
 
-app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', 
-				function ($rootScope, $firebaseArray, $location, $localStorage) {
+app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$sessionStorage', 
+				function ($rootScope, $firebaseArray, $location, $sessionStorage) {
 	
 	var config = {
 		apiKey: "AIzaSyAJpKVSthdn_BD-E0jPdrIczzcJXGhKGp4",
@@ -144,7 +150,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 
 	this.validaLogin = function(user) {
 		
-		$localStorage.usuarioLogado = null;
+		$sessionStorage.usuarioLogado = null;
 
 		angular.forEach(this.usuarioAdmin, function(value, index) {
 			if(value.Username == user.Username &&
@@ -154,20 +160,20 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			}
 		});
 
-		$localStorage.usuarioLogado = $rootScope.usuarioLogado;
+		$sessionStorage.usuarioLogado = $rootScope.usuarioLogado;
 	}
 
 	this.logout = function() {
 		$rootScope.usuarioLogado = null;
-		$localStorage.usuarioLogado = null;
+		$sessionStorage.usuarioLogado = null;
 		$location.path('/home');
 	}
 
 }]);
 
-app.run(function ($rootScope, $location, $localStorage) {
+app.run(function ($rootScope, $location, $sessionStorage) {
 
-	$rootScope.usuarioLogado = $localStorage.usuarioLogado;
+	$rootScope.usuarioLogado = $sessionStorage.usuarioLogado;
 
 	var rotasBloqueadasNaoLogados = ['/gerenciador'];
 	
@@ -181,4 +187,8 @@ app.run(function ($rootScope, $location, $localStorage) {
 			$location.path('/login');
 		} 
 	});
+
+	$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        $rootScope.title = current.$$route.title;
+    });
 });
