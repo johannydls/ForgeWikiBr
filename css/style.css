@@ -94,11 +94,26 @@
 	font-size: 16px;
 }
 
-.card .avatar {
+.avatar {
 	border: 1px solid #000;
 	width: 120px;
 	border-radius: 4px;
-	/*cursor: pointer;*/
+	cursor: pointer;
+
+	-webkit-transition: opacity 1s ease-in-out;
+	-moz-transition: opacity 1s ease-in-out;
+	-o-transition: opacity 1s ease-in-out;
+	transition: opacity 1s ease-in-out;
+
+	position: absolute;
+}
+
+.avatar2 {
+	border: 1px solid #000;
+	border-radius: 4px;
+	width: 120px;
+	height: 120px;
+	cursor: pointer;
 }
 
 .tipo_icone {
@@ -111,3 +126,9 @@ table .active {
 table .accordion {
 	display: block;
 }
+
+/**************/
+.transparent {
+	opacity: 0;
+}
+

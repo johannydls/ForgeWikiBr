@@ -1,4 +1,4 @@
-<div class="listaDeItens text-center">
+<div class="listaDeItens">
 
 	<div class="row">
 		<div class="col-xs-6">
@@ -65,7 +65,9 @@
 					<option value="Cavalaria Medieval">Cavalaria Medieval</option>
 					<option value="Chamado ao Dever">Chamado ao Dever</option>
 					<option value="Contato">Contato</option>
+					<option value="Detonação">Detonação</option>
 					<option value="Entrincheirado">Entrincheirado</option>
+					<option value="Esconde na Floresta">Esconde na Floresta</option>
 					<option value="Identidade Secreta">Identidade Secreta</option>
 					<option value="Moral">Moral</option>
 					<option value="Rali">Rali</option>
@@ -106,8 +108,18 @@
 		<li dir-paginate="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade | itemsPerPage: 3">
 			<h1 ng-show="unidadesMilitaresSemEra.length == 0">Sem unidades</h1>
 		
-			<div class="card">
-				<img class="avatar" src="{{unidade.Imagem}}" width="100px;">
+			<div class="card text-center">
+				
+				<div class="imgs" width="100px" height="100px" >
+					
+					<img class="avatar" src="{{unidade.Imagem}}" width="100px" ng-click="toggleClass($event, 'transparent')" title="Clique para ver a unidade">
+
+					<img class="avatar2" src="{{unidade.Imagem2}}" ng-show="{{unidade.Imagem2}}">
+
+					<img class="avatar2" src="{{unidade.Imagem}}" width="100px" ng-show="{{!unidade.Imagem2}}">
+
+				</div>
+
 				<h4><b>{{unidade.Nome}}</b></h4>
 				<br>
 				<table class="table text-left">
@@ -215,5 +227,5 @@
 </div>
 <br>
 <div class="text-center">
-	<dir-pagination-controls max-size="9" boundary-links="true"></dir-pagination-controls>
+	<dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
 </div>

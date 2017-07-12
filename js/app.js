@@ -70,6 +70,11 @@ app.controller('unidadesController', ['$scope', 'bd_app', function($scope, bd_ap
 		return bd_app.calculaBonus(valor, bonus);
 	};
 
+	$scope.toggleClass = function($event, className) {
+		className = className || 'transparent';
+		$($event.target).toggleClass(className);
+	};
+
 }]);
 
 app.controller('pageController', ['$scope','bd_app', function($scope, bd_app) {
