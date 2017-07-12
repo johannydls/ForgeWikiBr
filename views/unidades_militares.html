@@ -28,7 +28,7 @@
 
 		<div class="col-xs-6">
 			<div class="form-group">
-				<select ng-model="filtroUnidade" class="form-control" >
+				<select ng-model="filtroUnidade.Tipo" class="form-control" >
 					<option value="">Todas as Unidades</option>
 					<option value="Unidade Ligeira">Unidade Ligeira</option>
 					<option value="Unidade Pesada">Unidade Pesada</option>
@@ -43,12 +43,16 @@
 			<div class="form-group">
 				<select ng-model="filtroBonus" class="form-control" >
 					<option value="">Todos os Bônus</option>
+					<option value="Na Floresta">Na Floresta</option>
+					<option value="Nas Planícies">Nas Planícies</option>
+					<option value="Nas Rochas">Nas Rochas</option>
+					<option value="No Entrincheiramento">No Entrincheiramento</option>
+					<option value="Nos Arbustos">Nos Arbustos</option>
+					<option value="vs. Unidade de Artilharia">vs. Unidade de Artilharia</option>
+					<option value="vs. Unidade de Curto Alcance">vs. Unidade de Curto Alcance</option>
 					<option value="vs. Unidade Ligeira">vs. Unidade Ligeira</option>
 					<option value="vs. Unidade Pesada">vs. Unidade Pesada</option>
 					<option value="vs. Unidade Rápida">vs. Unidade Rápida</option>
-					<option value="vs. Unidade de Artilharia">vs. Unidade de Artilharia</option>
-					<option value="vs. Unidade de Curto Alcance">vs. Unidade de Curto Alcance</option>
-					<option value="No Entrincheiramento">No Entrincheiramento</option>
 				</select>
 			</div>
 		</div>
@@ -71,7 +75,7 @@
 
 		<div class="col-xs-6">
 			<div class="form-group">
-				<input class="form-control" type="text" placeholder="Filtrar por nome" ng-model="filterNome">
+				<input class="form-control" type="text" placeholder="Filtrar por nome" ng-model="filterNome.Nome">
 			</div>
 		</div>
 
