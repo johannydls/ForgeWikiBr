@@ -3,6 +3,10 @@
     /*-moz-user-select: none; /* Firefox 2+ */
     /*-ms-user-select: none; /* IE 10+ */
     /*user-select: none; /* Standard syntax */
+
+    padding: 0;
+    margin:  0;
+    box-sizing: border-box;
 }
 .site {
 	background-image: url(../img/bg1.jpg);
@@ -116,6 +120,10 @@
 	cursor: pointer;
 }
 
+.transparent {
+	opacity: 0;
+}
+
 .tipo_icone {
 	padding-bottom: 2px;
 }
@@ -127,8 +135,124 @@ table .accordion {
 	display: block;
 }
 
-/**************/
-.transparent {
-	opacity: 0;
+/*************CHAT*************/
+.chatbox {
+	width: 500px;
+	min-width: 390px;
+	height: 600px;
+	background: #fff;
+	padding: 25px;
+	margin: 20px auto;
+	border-radius: 10px;
+	border: 1px solid #ccc;
 }
 
+.chatregister {
+	width: 500px;
+	min-width: 390px;
+	height: 350px;
+	background: #fff;
+	padding: 25px;
+	margin: 20px auto;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+}
+.chatlogs ul {
+	list-style: none;
+}
+
+.chatlogs {
+	padding: 10px;
+	width: 100%;
+	height: 450px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.chatlogs::-webkit-scrollbar {
+	width: 10px;
+}
+
+.chatlogs::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,0.1);
+}
+
+.chat {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	margin-bottom: 10px;
+}
+
+.chat .user-photo {
+	width: 60px;
+	height: 60px;
+	background: #ccc;
+	border-radius: 50%;
+	/*background-image: url(../img/btn/btn_eventos.png);*/
+}
+
+.chat img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+.chat .chat-message {
+	width: 80%;
+	padding: 15px;
+	margin: 5px 10px 0;
+	border-radius: 10px;
+	font-size: 18px
+}
+
+.friend .chat-message {
+	background: #b2eae2;
+}
+
+.self .chat-message {
+	background: #dcf8c6;
+	order: -1;
+}
+
+.chat-form {
+	margin-top: 20px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.chat-form textarea {
+	width: 75%;
+	height: 70px;
+	resize: none;
+	margin-right: 5px;
+	margin-left: 25px;
+	padding: 10px;
+	font-size: 18px;
+	color: #999;
+}
+
+.chat-form textarea::-webkit-scrollbar {
+	width: 10px;
+}
+
+.chat-form textarea::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,0.1);
+}
+
+.chat-form textarea:focus {
+	background: #fff;
+}
+
+.chat-form button {
+	height: 70px;
+	font-size: 18px;
+
+	-webkit-transition: background .2s ease;
+	-moz-transition: background .2s ease;
+	-o-transition: background .2s ease;
+	transition: background .2s ease;
+	
+}

@@ -1,0 +1,45 @@
+
+<div class="chatbox" ng-show="$root.usuarioChatId != null">
+	<div class="chatlogs" scroll-glue>
+
+		<ul>
+			<li ng-repeat="msg in mensagens">
+				<div class="chat friend" ng-class="{self:getDonoMsgAdmin(msg.Id), friend:!getDonoMsgAdmin(msg.Id)}">
+					<img src="{{getAvatarDonoMsg(msg.Id)}}">
+					<p class="chat-message"><b>{{msg.Dono}}</b> <i><small>({{getDonoMsgMundo(msg.Id)}})</small></i>: <br>{{msg.Corpo}}</p>
+				</div>
+			</li>
+		</ul>
+
+	</div>
+
+	<form class="chat-form" ng-submit="enviarMsg()">
+		<textarea class="form-control" ng-model="corpoMsg" required></textarea>
+		<button class="btn btn-success" type="submit">Enviar</button>
+	</form>
+</div>
+
+<div class="chatregister text-center" ng-show="$root.usuarioChatId == null">
+	<h3>Entrar no chat com outros jogadores</h3>
+	<br>
+
+	<div class="row">
+		<form ng-submit="">
+			<input type="text" class="form-control" placeholder="Nick" ng-model="nickUsuario" required>
+			<br>
+			<select class="form-control" ng-model="mundoUsuario" required>
+				<option value="Arvahal - BR1">Arvahal - BR1</option>
+				<option value="Brisgard - BR2">Brisgard - BR2</option>
+				<option value="Cirgard - BR3">Cirgard - BR3</option>
+				<option value="Dinegu - BR4">Dinegu - BR4</option>
+				<option value="East-Nagach - BR5">East-Nagach - BR5</option>
+				<option value="Fel Dranghyr - BR6">Fel Dranghyr - BR6</option>
+				<option value="Greifental - BR7">Greifental - BR7</option>
+				<option value="Houndsmoor - BR8">Houndsmoor - BR8</option>
+				<option value="Jaims - BR9">Jaims - BR9</option>
+			</select>
+			<br>
+			<button class="btn btn-success" type="submit">Entrar</button>
+		</form>
+	</div>
+</div>
