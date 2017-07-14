@@ -137,8 +137,8 @@ table .accordion {
 
 /*************CHAT*************/
 .chatbox {
-	width: 100%;
-	min-width: 60%;
+	width: 60%;
+	min-width: 40%;
 	height: 100%;
 	background: #fff;
 	padding: 25px;
@@ -148,8 +148,8 @@ table .accordion {
 }
 
 .chatregister {
-	width: 100%;
-	min-width: 60%;
+	width: 60%;
+	min-width: 40%;
 	height: 100%;
 	background: #fff;
 	padding: 25px;
@@ -190,7 +190,6 @@ table .accordion {
 	height: 60px;
 	background: #ccc;
 	border-radius: 50%;
-	/*background-image: url(../img/btn/btn_eventos.png);*/
 }
 
 .chat img {
@@ -265,6 +264,16 @@ table .accordion {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: flex-start;
+	
+	justify-content: space-around;
+}
+
+.chatavatar ul {
+	list-style: none;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	justify-content: space-around;
 }
 
 .chatavatar label > input + img {
