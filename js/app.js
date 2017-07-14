@@ -89,6 +89,10 @@ app.controller('pageController', ['$scope','bd_app', function($scope, bd_app) {
 		bd_app.logout();
 	}
 
+	$scope.logoutChat = function() {
+		bd_app.logoutChat();
+	}
+
 }]);
 
 app.controller('loginController', ['$scope', 'bd_app', function($scope, bd_app) {
@@ -112,45 +116,64 @@ app.controller('loginController', ['$scope', 'bd_app', function($scope, bd_app) 
 
 }]);
 
-app.controller('chatController', ['$scope','bd_app', function ($scope, bd_app, $sessionStorage, $rootScope) {
+app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope', function ($scope, bd_app, $localStorage, $rootScope) {
 
 	$scope.usuarios = bd_app.getUsuarios();
 	$scope.avatars = bd_app.getAvatars();
 	$scope.mensagens = bd_app.getMensagens();
 
-	$scope.enviarMsg = function() {
+	$scope.enviarMsg = function(dono, id) {
 		bd_app.enviarMensagem(
 			$scope.corpoMsg,
-			"NinjaX",
-			"Admin"
+			dono,
+			id
 		);
 
 		$scope.corpoMsg = '';
 	}
 
-	$scope.getAvatarDonoMsg = function(donoId) {
-		
+	$scope.getDonoMsg = function(donoId, attr) {
 		for (var i = 0; i < $scope.usuarios.length; i++) {
 			if ($scope.usuarios[i].$id == donoId) {
-				return $scope.usuarios[i].Avatar;
+
+				switch (attr) {
+					case 'Id':
+						return $scope.usuarios[i].$id;
+						break;
+
+					case 'Nick':
+						return $scope.usuarios[i].Nick;
+						break;
+
+					case 'Avatar':
+						return $scope.usuarios[i].Avatar;
+						break;
+
+					case 'Admin':
+						return $scope.usuarios[i].Admin;
+						break;
+
+					case 'Mundo':
+						return $scope.usuarios[i].Mundo;
+						break;
+				}
 			}
 		}
 	}
 
-	$scope.getDonoMsgAdmin = function(donoId) {
-		for (var i = 0; i < $scope.usuarios.length; i++) {
-			if ($scope.usuarios[i].$id == donoId) {
-				return $scope.usuarios[i].Admin;
-			}
-		}
+	$scope.criarUsuario = function() {
+		bd_app.criarUsuario(
+			$scope.nickUsuario,
+			$scope.mundoUsuario,
+			$scope.avatarUsuario
+		);
+
+		$localStorage.usuarioChatId = $rootScope.usuarioChatId;
 	}
 
-	$scope.getDonoMsgMundo = function(donoId) {
-		for (var i = 0; i < $scope.usuarios.length; i++) {
-			if ($scope.usuarios[i].$id == donoId) {
-				return $scope.usuarios[i].Mundo;
-			}
-		}
+	$scope.loginContaExistente = function() {
+		bd_app.loginContaExistente($scope.codigoAcesso);
+		$scope.codigoAcesso = '';
 	}
 
 	$scope.glued = true;
@@ -158,8 +181,8 @@ app.controller('chatController', ['$scope','bd_app', function ($scope, bd_app, $
 }]);
 
 
-app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$sessionStorage', 
-				function ($rootScope, $firebaseArray, $location, $sessionStorage) {
+app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', 
+				function ($rootScope, $firebaseArray, $location, $localStorage) {
 	
 	var config = {
 		apiKey: "AIzaSyAJpKVSthdn_BD-E0jPdrIczzcJXGhKGp4",
@@ -198,17 +221,17 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$sessionStor
 		return this.mensagens;
 	}
 
-	this.criarUsuario = function(avatar, mundo, nick) {
+	this.criarUsuario = function(nick, mundo, avatar) {
 
 		var newUserId = rootChat.child('Usuarios').push({
 			Admin: false,
-			Avatar: avatar,
+			Nick: nick,
 			Mundo: mundo,
-			Nick: nick
+			Avatar: avatar
 		}).key;
 
-		$rootScope.usuarioChatId = newUserId;
-		$sessionStorage.usuarioChatId = newUserId;
+		$localStorage.usuarioChatId = newUserId;
+		$rootScope.usuarioChatId = $localStorage.usuarioChatId;
 	}
 
 	this.enviarMensagem = function(corpo, dono, id) {
@@ -217,6 +240,11 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$sessionStor
 			Dono: dono,
 			Id: id
 		});
+	}
+
+	this.loginContaExistente = function(contaId) {
+		$rootScope.usuarioChatId = contaId;
+		$localStorage.usuarioChatId = $rootScope.usuarioChatId;
 	}
 	
 
@@ -240,7 +268,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$sessionStor
 
 	this.validaLogin = function(user) {
 		
-		$sessionStorage.usuarioLogado = null;
+		$localStorage.usuarioLogado = null;
 
 		angular.forEach(this.usuarioAdmin, function(value, index) {
 			if(value.Username == user.Username &&
@@ -250,18 +278,18 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$sessionStor
 			}
 		});
 
-		$sessionStorage.usuarioLogado = $rootScope.usuarioLogado;
+		$localStorage.usuarioLogado = $rootScope.usuarioLogado;
 	}
 
 	this.logout = function() {
 		$rootScope.usuarioLogado = null;
-		$sessionStorage.usuarioLogado = null;
+		$localStorage.usuarioLogado = null;
 		$location.path('/home');
 	}
 
 	this.logoutChat = function() {
-		$rootScope.usuarioChat = null;
-		$sessionStorage.usuarioChat = null;
+		$rootScope.usuarioChatId = null;
+		$localStorage.usuarioChatId = null;
 		$location.path('/chat');
 	}
 
@@ -271,6 +299,19 @@ app.filter('reverse', function() {
   return function(items) {
     return items.slice().reverse();
   };
+});
+
+app.directive('ngEnter', function() {
+    return function(scope, element, attrs) {
+        element.bind("keydown", function(e) {
+            if(e.which === 13) {
+                scope.$apply(function(){
+                    scope.$eval(attrs.ngEnter, {'e': e});
+                });
+                e.preventDefault();
+            }
+        });
+    };
 });
 
 app.run(function ($rootScope, $location, $sessionStorage) {

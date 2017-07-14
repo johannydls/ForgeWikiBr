@@ -137,9 +137,9 @@ table .accordion {
 
 /*************CHAT*************/
 .chatbox {
-	width: 500px;
-	min-width: 390px;
-	height: 600px;
+	width: 100%;
+	min-width: 60%;
+	height: 100%;
 	background: #fff;
 	padding: 25px;
 	margin: 20px auto;
@@ -148,9 +148,9 @@ table .accordion {
 }
 
 .chatregister {
-	width: 500px;
-	min-width: 390px;
-	height: 350px;
+	width: 100%;
+	min-width: 60%;
+	height: 100%;
 	background: #fff;
 	padding: 25px;
 	margin: 20px auto;
@@ -216,6 +216,10 @@ table .accordion {
 	order: -1;
 }
 
+.admin {
+	color: green;
+}
+
 .chat-form {
 	margin-top: 20px;
 	display: flex;
@@ -255,4 +259,27 @@ table .accordion {
 	-o-transition: background .2s ease;
 	transition: background .2s ease;
 	
+}
+
+.chatavatar {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+}
+
+.chatavatar label > input + img {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	cursor: pointer;
+	border: 2px solid transparent;
+}
+
+.chatavatar label > input {
+	visibility: hidden;
+	position: absolute;
+}
+
+.chatavatar label > input:checked + img {
+	background: #f00;
 }

@@ -1,20 +1,26 @@
 
-<div class="chatbox" ng-show="$root.usuarioChatId != null">
-	<div class="chatlogs" scroll-glue>
+<div class="chatbox container" ng-show="$root.usuarioChatId != null">
+
+	<div class="text-center">
+		<h3>Guarde seu código de acesso: </h3>
+		<h3>{{$root.usuarioChatId}}</h1>
+	</div>
+	<br>
+	<div class="chatlogs" scroll-glue="glued">
 
 		<ul>
 			<li ng-repeat="msg in mensagens">
-				<div class="chat friend" ng-class="{self:getDonoMsgAdmin(msg.Id), friend:!getDonoMsgAdmin(msg.Id)}">
-					<img src="{{getAvatarDonoMsg(msg.Id)}}">
-					<p class="chat-message"><b>{{msg.Dono}}</b> <i><small>({{getDonoMsgMundo(msg.Id)}})</small></i>: <br>{{msg.Corpo}}</p>
+				<div class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==$root.usuarioChatId, friend:getDonoMsg(msg.Id,'Id') != $root.usuarioChatId}">
+					<img src="{{getDonoMsg(msg.Id,'Avatar')}}">
+					<p class="chat-message"><b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b> <i><small>({{getDonoMsg(msg.Id, 'Mundo')}})</small></i>: <br>{{msg.Corpo}}</p>
 				</div>
 			</li>
 		</ul>
 
 	</div>
 
-	<form class="chat-form" ng-submit="enviarMsg()">
-		<textarea class="form-control" ng-model="corpoMsg" required></textarea>
+	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg($root.usuarioChatId, 'Nick'), $root.usuarioChatId)">
+		<textarea ng-enter="enviarMsg(getDonoMsg($root.usuarioChatId, 'Nick'), $root.usuarioChatId)" class="form-control" ng-model="corpoMsg" required></textarea>
 		<button class="btn btn-success" type="submit">Enviar</button>
 	</form>
 </div>
@@ -23,8 +29,28 @@
 	<h3>Entrar no chat com outros jogadores</h3>
 	<br>
 
+	<h4>Login com conta existente</h4>
+
+	
+	<form ng-submit="loginContaExistente()">
+		<div class="row">
+			<div class="col-md-10">
+				<input class="form-control" type="text" placeholder="Código de acesso" ng-model="codigoAcesso" required>
+			</div>
+
+			<div class="col-md-2">
+				<button class="btn btn-success" type="submit">Entrar</button>
+			</div>
+		</div>
+		
+	</form>
+
+	<br>
+	<hr>
+	<h4>Login com nova conta</h4>
+
 	<div class="row">
-		<form ng-submit="">
+		<form ng-submit="criarUsuario()">
 			<input type="text" class="form-control" placeholder="Nick" ng-model="nickUsuario" required>
 			<br>
 			<select class="form-control" ng-model="mundoUsuario" required>
@@ -39,7 +65,25 @@
 				<option value="Jaims - BR9">Jaims - BR9</option>
 			</select>
 			<br>
+
+			<section class="chatavatar">
+				<label>
+					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_1.jpg?alt=media&token=4d700b7f-1b7a-47ba-975b-28475b6b6eb1" ng-model="avatarUsuario">
+					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_1.jpg?alt=media&token=4d700b7f-1b7a-47ba-975b-28475b6b6eb1">
+				</label>
+
+				<label>
+					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_2.jpg?alt=media&token=d7199d81-05b0-4b6b-b37a-bdd56381c4dc" ng-model="avatarUsuario">
+					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_2.jpg?alt=media&token=d7199d81-05b0-4b6b-b37a-bdd56381c4dc">
+				</label>
+			</section>
+
+			<br>
 			<button class="btn btn-success" type="submit">Entrar</button>
 		</form>
 	</div>
 </div>
+
+
+
+
