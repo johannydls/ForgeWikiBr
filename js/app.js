@@ -121,6 +121,11 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 	$scope.usuarios = bd_app.getUsuarios();
 	$scope.avatars = bd_app.getAvatars();
 	$scope.mensagens = bd_app.getMensagens();
+	$scope.usuariosId = [];
+
+	$scope.usuariosId.push($scope.usuarios.length);
+
+
 
 	$scope.enviarMsg = function(dono, id) {
 		bd_app.enviarMensagem(
@@ -168,6 +173,10 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 			$scope.avatarUsuario
 		);
 
+		$scope.nickUsuario = '';
+		$scope.mundoUsuario = '';
+		$scope.avatarUsuario = '';
+
 		$localStorage.usuarioChatId = $rootScope.usuarioChatId;
 	}
 
@@ -181,8 +190,8 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 }]);
 
 
-app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', 
-				function ($rootScope, $firebaseArray, $location, $localStorage) {
+app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', '$window', 
+				function ($rootScope, $firebaseArray, $location, $localStorage, $window) {
 	
 	var config = {
 		apiKey: "AIzaSyAJpKVSthdn_BD-E0jPdrIczzcJXGhKGp4",
@@ -223,15 +232,22 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 
 	this.criarUsuario = function(nick, mundo, avatar) {
 
-		var newUserId = rootChat.child('Usuarios').push({
-			Admin: false,
-			Nick: nick,
-			Mundo: mundo,
-			Avatar: avatar
-		}).key;
+		if (mundo == null || avatar == null) {
+			$window.alert("Todos os campos devem ser preenchidos/selecionados!");
+		} else {
 
-		$localStorage.usuarioChatId = newUserId;
-		$rootScope.usuarioChatId = $localStorage.usuarioChatId;
+			var newUserId = rootChat.child('Usuarios').push({
+				Admin: false,
+				Nick: nick,
+				Mundo: mundo,
+				Avatar: avatar
+			}).key;
+
+			$window.alert("Seja bem vindo, " + nick);
+
+			$localStorage.usuarioChatId = newUserId;
+			$rootScope.usuarioChatId = $localStorage.usuarioChatId;
+		}
 	}
 
 	this.enviarMensagem = function(corpo, dono, id) {
@@ -243,8 +259,20 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 	}
 
 	this.loginContaExistente = function(contaId) {
-		$rootScope.usuarioChatId = contaId;
-		$localStorage.usuarioChatId = $rootScope.usuarioChatId;
+
+		for (var i = 0; i < this.usuarios.length; i++) {
+			if (this.usuarios[i].$id == contaId) {
+
+				$rootScope.usuarioChatId = contaId;
+				$localStorage.usuarioChatId = $rootScope.usuarioChatId;
+
+				$window.alert("Bem vindo de volta,\n" + this.usuarios[i].Nick);
+
+				return;
+			}
+		}
+
+		$window.alert("Usuário não encontrado.\nFaça login com um novo usuário!");
 	}
 	
 

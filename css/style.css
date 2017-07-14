@@ -157,6 +157,18 @@ table .accordion {
 	border-radius: 10px;
 	border: 1px solid #ccc;
 }
+
+.titulo-chat {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.subtitulo-chat {
+	font-size: 15px;
+	font-weight: 600;
+}
+
+
 .chatlogs ul {
 	list-style: none;
 }
@@ -264,8 +276,10 @@ table .accordion {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: flex-start;
-	
 	justify-content: space-around;
+	height: 200px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 .chatavatar ul {
@@ -291,4 +305,22 @@ table .accordion {
 
 .chatavatar label > input:checked + img {
 	background: #f00;
+}
+
+@media(max-width: 600px) {
+	.chatbox,
+	.chatregister {
+		width: 100%;
+	}
+
+	.chat .chat-message {
+		width: 65%;
+		font-size: 14px;
+	}
+}
+
+@media(max-width: 825px) {
+	.chat .chat-message {
+		width: 70%;
+	}
 }

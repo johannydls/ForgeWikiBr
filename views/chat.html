@@ -2,8 +2,8 @@
 <div class="chatbox container" ng-show="$root.usuarioChatId != null">
 
 	<div class="text-center">
-		<h3>Guarde seu código de acesso: </h3>
-		<h3>{{$root.usuarioChatId}}</h1>
+		<span class="titulo-chat">Guarde seu código de acesso: </span>
+		<span id="codigoAcesso" class="subtitulo-chat">{{$root.usuarioChatId}}</span>
 	</div>
 	<br>
 	<div class="chatlogs" scroll-glue="glued">
@@ -26,11 +26,11 @@
 </div>
 
 <div class="chatregister text-center" ng-show="$root.usuarioChatId == null">
-	<h3>Entrar no chat com outros jogadores</h3>
-	<br>
+	<span class="titulo-chat">Entrar no chat com outros jogadores</span>
+	<br><br>
 
-	<h4>Login com conta existente</h4>
-
+	<span class="subtitulo-chat">Login com usuário existente</span>
+	<br><br>
 	
 	<form ng-submit="loginContaExistente()">
 		<div class="row">
@@ -47,13 +47,14 @@
 
 	<br>
 	<hr>
-	<h4>Login com nova conta</h4>
-
+	<span class="subtitulo-chat">Login com novo usuário</span>
+	<br><br>
 	<div class="row">
 		<form ng-submit="criarUsuario()">
 			<input type="text" class="form-control" placeholder="Nick" ng-model="nickUsuario" required>
 			<br>
 			<select class="form-control" ng-model="mundoUsuario" required>
+				<option value="">Selecione um mundo</option>
 				<option value="Arvahal - BR1">Arvahal - BR1</option>
 				<option value="Brisgard - BR2">Brisgard - BR2</option>
 				<option value="Cirgard - BR3">Cirgard - BR3</option>
@@ -66,36 +67,11 @@
 			</select>
 			<br>
 
-			<section class="chatavatar">
+			<section class="chatavatar form-group">
 
-				<label>
-					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_unknown.jpg?alt=media&token=f728e717-4539-404a-a48a-b809afc8da27" ng-model="avatarUsuario">
-					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_unknown.jpg?alt=media&token=f728e717-4539-404a-a48a-b809afc8da27">
-				</label>
-
-				<label>
-					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_84.jpg?alt=media&token=a7b6fb3c-6722-463c-8f60-366a8eac40d8" ng-model="avatarUsuario">
-					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_84.jpg?alt=media&token=a7b6fb3c-6722-463c-8f60-366a8eac40d8">
-				</label>
-
-				<label>
-					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_1.jpg?alt=media&token=4d700b7f-1b7a-47ba-975b-28475b6b6eb1" ng-model="avatarUsuario">
-					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_1.jpg?alt=media&token=4d700b7f-1b7a-47ba-975b-28475b6b6eb1">
-				</label>
-
-				<label>
-					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_15.jpg?alt=media&token=a297526c-c038-424a-954f-52508756a1af" ng-model="avatarUsuario">
-					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_15.jpg?alt=media&token=a297526c-c038-424a-954f-52508756a1af">
-				</label>
-
-				<label>
-					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_2.jpg?alt=media&token=d7199d81-05b0-4b6b-b37a-bdd56381c4dc" ng-model="avatarUsuario">
-					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_2.jpg?alt=media&token=d7199d81-05b0-4b6b-b37a-bdd56381c4dc">
-				</label>
-
-				<label>
-					<input type="radio" name="avatar" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_17.jpg?alt=media&token=a3c29012-6c62-44d6-9d77-d5d4003cebf0" ng-model="avatarUsuario">
-					<img src="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2Favatars%2Fportrait_17.jpg?alt=media&token=a3c29012-6c62-44d6-9d77-d5d4003cebf0">
+				<label ng-repeat="avatar in avatars">
+					<input type="radio" name="avatar1" value="{{avatar.Url}}" ng-model="$parent.avatarUsuario">
+					<img src="{{avatar.Url}}" title="Escolher este avatar">
 				</label>
 
 			</section>
