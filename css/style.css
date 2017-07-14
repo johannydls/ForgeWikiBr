@@ -23,6 +23,10 @@
 	margin-bottom: 30px;
 }
 
+.banner img {
+	width: 100%;
+	max-width: 350px;
+}
 .titulo {
 	font-variant: small-caps;
 	font-family: Arial;
@@ -197,13 +201,6 @@ table .accordion {
 	margin-bottom: 10px;
 }
 
-.chat .user-photo {
-	width: 60px;
-	height: 60px;
-	background: #ccc;
-	border-radius: 50%;
-}
-
 .chat img {
 	width: 60px;
 	height: 60px;
@@ -322,6 +319,11 @@ table .accordion {
 	.chat .chat-message {
 		width: 65%;
 		font-size: 14px;
+	}
+
+	.chat img {
+		width: 50px;
+		height: 50px;
 	}
 }
 

@@ -3,7 +3,7 @@
 
 	<div class="text-center">
 		<span class="titulo-chat">Nick: <b>{{getDonoMsg(usrAtual, 'Nick')}}</b></span><br>
-		<span class="titulo-chat">Código de acesso: </span>
+		<span class="titulo-chat">Código de acesso: </span><br>
 		<span class="subtitulo-chat codigoAcesso">{{usrAtual}}</span>
 	</div>
 	<br>
@@ -21,7 +21,7 @@
 	</div>
 
 	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)">
-		<textarea ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)" class="form-control" ng-model="corpoMsg" required></textarea>
+		<textarea ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)" class="form-control" ng-model="corpoMsg" required></textarea><br>
 		<button class="btn btn-success" type="submit">Enviar</button>
 		<button class="btn btn-danger pull-right" ng-click="logoutChat()">Sair</button>
 	</form>
