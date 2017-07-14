@@ -1,16 +1,17 @@
 
-<div class="chatbox container" ng-show="$root.usuarioChatId != null">
+<div class="chatbox container" ng-show="usrAtual != null">
 
 	<div class="text-center">
-		<span class="titulo-chat">Guarde seu código de acesso: </span>
-		<span id="codigoAcesso" class="subtitulo-chat">{{$root.usuarioChatId}}</span>
+		<span class="titulo-chat">Nick: <b>{{getDonoMsg(usrAtual, 'Nick')}}</b></span><br>
+		<span class="titulo-chat">Código de acesso: </span>
+		<span class="subtitulo-chat codigoAcesso">{{usrAtual}}</span>
 	</div>
 	<br>
 	<div class="chatlogs" scroll-glue="glued">
 
 		<ul>
 			<li ng-repeat="msg in mensagens">
-				<div class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==$root.usuarioChatId, friend:getDonoMsg(msg.Id,'Id') != $root.usuarioChatId}">
+				<div class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==usrAtual, friend:getDonoMsg(msg.Id,'Id') != usrAtual}">
 					<img src="{{getDonoMsg(msg.Id,'Avatar')}}">
 					<p class="chat-message"><b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b> <i><small>({{getDonoMsg(msg.Id, 'Mundo')}})</small></i>: <br>{{msg.Corpo}}</p>
 				</div>
@@ -19,13 +20,15 @@
 
 	</div>
 
-	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg($root.usuarioChatId, 'Nick'), $root.usuarioChatId)">
-		<textarea ng-enter="enviarMsg(getDonoMsg($root.usuarioChatId, 'Nick'), $root.usuarioChatId)" class="form-control" ng-model="corpoMsg" required></textarea>
+	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)">
+		<textarea ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)" class="form-control" ng-model="corpoMsg" required></textarea>
 		<button class="btn btn-success" type="submit">Enviar</button>
+		<button class="btn btn-danger pull-right" ng-click="logoutChat()">Sair</button>
 	</form>
+
 </div>
 
-<div class="chatregister text-center" ng-show="$root.usuarioChatId == null">
+<div class="chatregister text-center" ng-show="usrAtual == null">
 	<span class="titulo-chat">Entrar no chat com outros jogadores</span>
 	<br><br>
 
@@ -55,15 +58,15 @@
 			<br>
 			<select class="form-control" ng-model="mundoUsuario" required>
 				<option value="">Selecione um mundo</option>
-				<option value="Arvahal - BR1">Arvahal - BR1</option>
-				<option value="Brisgard - BR2">Brisgard - BR2</option>
-				<option value="Cirgard - BR3">Cirgard - BR3</option>
-				<option value="Dinegu - BR4">Dinegu - BR4</option>
-				<option value="East-Nagach - BR5">East-Nagach - BR5</option>
-				<option value="Fel Dranghyr - BR6">Fel Dranghyr - BR6</option>
-				<option value="Greifental - BR7">Greifental - BR7</option>
-				<option value="Houndsmoor - BR8">Houndsmoor - BR8</option>
-				<option value="Jaims - BR9">Jaims - BR9</option>
+				<option value="BR1 - Arvahal">BR1 - Arvahal</option>
+				<option value="BR2 - Brisgard">BR2 - Brisgard</option>
+				<option value="BR3 - Cirgard">BR3 - Cirgard</option>
+				<option value="BR4 - Dinegu">BR4 - Dinegu</option>
+				<option value="BR5 - East-Nagach">BR5 - East-Nagach</option>
+				<option value="BR6 - Fel Dranghyr">BR6 - Fel Dranghyr</option>
+				<option value="BR7 - Greifental">BR7 - Greifental</option>
+				<option value="BR8 - Houndsmoor">BR8 - Houndsmoor</option>
+				<option value="BR9 - Jaims">BR9 - Jaims</option>
 			</select>
 			<br>
 

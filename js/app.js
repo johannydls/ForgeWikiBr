@@ -121,12 +121,14 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 	$scope.usuarios = bd_app.getUsuarios();
 	$scope.avatars = bd_app.getAvatars();
 	$scope.mensagens = bd_app.getMensagens();
-	$scope.usuariosId = [];
+	$scope.usrAtual = null;
 
-	$scope.usuariosId.push($scope.usuarios.length);
-
-
-
+	if ($localStorage.usuarioChatId != null) {
+		$scope.usrAtual = $localStorage.usuarioChatId;
+		$localStorage.ultimoAcesso = $scope.usrAtual;
+		$scope.codigoAcesso = $localStorage.ultimoAcesso;
+	}
+	
 	$scope.enviarMsg = function(dono, id) {
 		bd_app.enviarMensagem(
 			$scope.corpoMsg,
@@ -177,12 +179,23 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 		$scope.mundoUsuario = '';
 		$scope.avatarUsuario = '';
 
-		$localStorage.usuarioChatId = $rootScope.usuarioChatId;
+		$scope.usrAtual = $localStorage.usuarioChatId;
+		$localStorage.ultimoAcesso = $scope.usrAtual;
+		$scope.codigoAcesso = $scope.usrAtual;
 	}
 
 	$scope.loginContaExistente = function() {
 		bd_app.loginContaExistente($scope.codigoAcesso);
-		$scope.codigoAcesso = '';
+
+		$scope.usrAtual = $localStorage.usuarioChatId;
+		$localStorage.ultimoAcesso = $scope.usrAtual;
+		$scope.ultimoAcesso = $scope.usrAtual;
+	}
+
+	$scope.logoutChat = function() {
+		$scope.codigoAcesso = $localStorage.ultimoAcesso;
+		$scope.usrAtual = null;
+		$localStorage.usuarioChatId = null;
 	}
 
 	$scope.glued = true;
@@ -302,7 +315,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			if(value.Username == user.Username &&
 				value.Password == user.Password) {
 				$rootScope.usuarioLogado = value;
-				$location.path('/home');
+				$location.path('/admin');
 			}
 		});
 
@@ -342,9 +355,10 @@ app.directive('ngEnter', function() {
     };
 });
 
-app.run(function ($rootScope, $location, $sessionStorage) {
+app.run(function ($rootScope, $location, $sessionStorage, $localStorage) {
 
 	$rootScope.usuarioLogado = $sessionStorage.usuarioLogado;
+	$rootScope.usuarioChatId = $localStorage.usuarioChatId;
 
 	var rotasBloqueadasNaoLogados = ['/gerenciador'];
 	
@@ -357,6 +371,8 @@ app.run(function ($rootScope, $location, $sessionStorage) {
 
 			$location.path('/login');
 		} 
+
+		$rootScope.usuarioChatId = $localStorage.usuarioChatId;
 	});
 
 	$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
