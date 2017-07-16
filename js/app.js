@@ -260,7 +260,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 				Nick: nick,
 				Mundo: mundo,
 				Avatar: avatar,
-				Status: true
+				Online: true
 			}).key;
 
 			$window.alert("Seja bem vindo, " + nick);
