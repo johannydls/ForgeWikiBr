@@ -1,18 +1,22 @@
 
 <div class="chatbox container" ng-show="usrAtual != null">
 
-	<div class="text-center">
+	<div class="text-center" style="position: relative;">
 		<span class="titulo-chat">Nick: <b>{{getDonoMsg(usrAtual, 'Nick')}}</b></span><br>
+		<button class="btn btn-danger btn-sair btn-sm" title="Sair do chat" ng-click="logoutChat()"><i class="fa fa-close"></i></button>
 		<span class="titulo-chat">Código de acesso: </span><br>
-		<span class="subtitulo-chat codigoAcesso">{{usrAtual}}</span>
+		<span class="subtitulo-chat codigoAcesso">{{usrAtual}}</span><br>
+
 	</div>
+
 	<br>
+	
 	<div class="chatlogs" scroll-glue="glued">
 
 		<ul>
 			<li ng-repeat="msg in mensagens">
 				<div class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==usrAtual, friend:getDonoMsg(msg.Id,'Id') != usrAtual}">
-					<img src="{{getDonoMsg(msg.Id,'Avatar')}}">
+					<img class="online-{{getDonoMsg(msg.Id, 'Online')}}" src="{{getDonoMsg(msg.Id,'Avatar')}}">
 					<p class="chat-message"><b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b> <i><small>({{getDonoMsg(msg.Id, 'Mundo')}})</small></i>: <br>{{msg.Corpo}}</p>
 				</div>
 			</li>
@@ -21,11 +25,13 @@
 	</div>
 
 	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)">
-		<textarea ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)" class="form-control" ng-model="corpoMsg" required></textarea><br>
-		<button class="btn btn-success" type="submit">Enviar</button>
-		<button class="btn btn-danger pull-right" ng-click="logoutChat()">Sair</button>
+		<textarea placeholder="Digite uma mensagem e pressione enter" ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)" class="form-control" ng-model="corpoMsg" required></textarea>
 	</form>
-
+	<br>
+	<div class="text-center">
+		<span class="titulo-chat text-center"><a href="javascriot:void(0)" data-toggle="modal" data-target="#usuariosCadastrados">Usuários cadastrados</a></span>
+	</div>
+		
 </div>
 
 <div class="chatregister text-center" ng-show="usrAtual == null">
@@ -84,3 +90,29 @@
 		</form>
 	</div>
 </div>
+
+<div id="usuariosCadastrados" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog"  role="document">
+		<div class="modal-content" >
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Usuários Cadastrados</h4>
+			</div>
+
+			<div class="modal-body usuariosOnline" style="height: 400px; overflow-x: hidden; overflow-y: scroll;">
+				<ul>
+					<li ng-repeat="usr in usuarios | orderBy: 'Nick' | orderBy:'-Online'">
+						<div class="chat card-usr">
+							<img src="{{usr.Avatar}}" class="online-{{usr.Online}}"> 
+							<p class="detalhes-usr"><span class="nick">{{usr.Nick}}</span><br><span class="mundo">{{usr.Mundo}}</span></p>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

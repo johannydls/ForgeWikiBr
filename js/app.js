@@ -83,7 +83,7 @@ app.controller('unidadesController', ['$scope', 'bd_app', function($scope, bd_ap
 
 }]);
 
-app.controller('pageController', ['$scope','bd_app', function($scope, bd_app) {
+app.controller('pageController', ['$scope','$window','bd_app', function($scope, $window, bd_app) {
 
 	$scope.logout = function() {
 		bd_app.logout();
@@ -92,6 +92,8 @@ app.controller('pageController', ['$scope','bd_app', function($scope, bd_app) {
 	$scope.logoutChat = function() {
 		bd_app.logoutChat();
 	}
+
+	$window.beforeunload = $scope.logoutChat;
 
 }]);
 
@@ -163,6 +165,9 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 					case 'Mundo':
 						return $scope.usuarios[i].Mundo;
 						break;
+
+					case 'Online':
+						return $scope.usuarios[i].Online;
 				}
 			}
 		}
@@ -195,7 +200,8 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 	$scope.logoutChat = function() {
 		$scope.codigoAcesso = $localStorage.ultimoAcesso;
 		$scope.usrAtual = null;
-		$localStorage.usuarioChatId = null;
+		
+		bd_app.logoutChat();
 	}
 
 	$scope.glued = true;
@@ -253,7 +259,8 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 				Admin: false,
 				Nick: nick,
 				Mundo: mundo,
-				Avatar: avatar
+				Avatar: avatar,
+				Status: true
 			}).key;
 
 			$window.alert("Seja bem vindo, " + nick);
@@ -280,6 +287,10 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 				$localStorage.usuarioChatId = $rootScope.usuarioChatId;
 
 				$window.alert("Bem vindo de volta,\n" + this.usuarios[i].Nick);
+
+				rootChat.child('Usuarios').child($rootScope.usuarioChatId).update({
+					"Online": true
+				});
 
 				return;
 			}
@@ -329,6 +340,11 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 	}
 
 	this.logoutChat = function() {
+
+		rootChat.child('Usuarios').child($rootScope.usuarioChatId).update({
+			"Online": false
+		});
+
 		$rootScope.usuarioChatId = null;
 		$localStorage.usuarioChatId = null;
 		$location.path('/chat');
