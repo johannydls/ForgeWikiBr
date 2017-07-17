@@ -15,17 +15,29 @@
 
 		<ul>
 			<li ng-repeat="msg in mensagens">
-				<div class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==usrAtual, friend:getDonoMsg(msg.Id,'Id') != usrAtual}">
+				<div ng-show="{{!msg.Sistema}}" class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==usrAtual, friend:getDonoMsg(msg.Id,'Id') != usrAtual}">
 					<img class="online-{{getDonoMsg(msg.Id, 'Online')}}" src="{{getDonoMsg(msg.Id,'Avatar')}}">
-					<p class="chat-message"><b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b> <i><small>({{getDonoMsg(msg.Id, 'Mundo')}})</small></i>: <br>{{msg.Corpo}}</p>
+					<p class="chat-message">
+						<b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b> 
+						<i><small>({{getDonoMsg(msg.Id, 'Mundo')}})</small></i>: 
+						<br>{{msg.Corpo}}
+						<span class="data-msg">{{msg.Data}}</p>
+					</p>
+					
+				</div>
+
+				<div ng-show="msg.Sistema" class="chat msg-sistema">
+					<p class="msg-sistema-p">
+						<b>{{getDonoMsg(msg.Id, 'Nick')}}</b> {{msg.Corpo}}
+					</p>
 				</div>
 			</li>
 		</ul>
 
 	</div>
 
-	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)">
-		<textarea placeholder="Digite uma mensagem e pressione enter" ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual)" class="form-control" ng-model="corpoMsg" required></textarea>
+	<form class="chat-form" ng-submit="enviarMsg(getDonoMsg(usrAtual, 'Nick', data | date:'HH:mm'), usrAtual)">
+		<textarea placeholder="Digite uma mensagem e pressione enter" ng-enter="enviarMsg(getDonoMsg(usrAtual, 'Nick'), usrAtual, data | date:'HH:mm')" class="form-control" ng-model="corpoMsg" required></textarea>
 	</form>
 	<br>
 	<div class="text-center">
@@ -43,11 +55,11 @@
 	
 	<form ng-submit="loginContaExistente()">
 		<div class="row">
-			<div class="col-md-10">
+			<div class="col-xs-10">
 				<input class="form-control" type="text" placeholder="Código de acesso" ng-model="codigoAcesso" required>
 			</div>
 
-			<div class="col-md-2">
+			<div class="col-xs-2">
 				<button class="btn btn-success" type="submit">Entrar</button>
 			</div>
 		</div>

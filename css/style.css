@@ -167,6 +167,11 @@ table .accordion {
 	font-weight: 400;
 }
 
+.titulo-chat a {
+	text-decoration: none;
+	font-variant: small-caps;
+}
+
 .subtitulo-chat {
 	font-size: 15px;
 	font-weight: 600;
@@ -220,7 +225,8 @@ table .accordion {
 	padding: 15px;
 	margin: 5px 10px 0;
 	border-radius: 10px;
-	font-size: 18px
+	font-size: 18px;
+	position: relative;
 }
 
 .friend .chat-message {
@@ -230,6 +236,24 @@ table .accordion {
 .self .chat-message {
 	background: #dcf8c6;
 	order: -1;
+}
+
+.data-msg {
+	font-variant: sub;
+	position: absolute;
+	top: 0px;
+	right: 6px;
+	font-weight: 600;
+	color: #757575;
+	font-size: 12px;
+}
+
+.msg-sistema-p {
+	font-size: 13px;
+	background: #e0e0e0;
+	margin: 10px auto;
+	padding: 7px;
+	border-radius: 9px;
 }
 
 .admin {

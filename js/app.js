@@ -118,12 +118,17 @@ app.controller('loginController', ['$scope', 'bd_app', function($scope, bd_app) 
 
 }]);
 
-app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope', function ($scope, bd_app, $localStorage, $rootScope) {
+app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope', '$filter', 
+	function ($scope, bd_app, $localStorage, $rootScope, $filter) {
 
 	$scope.usuarios = bd_app.getUsuarios();
 	$scope.avatars = bd_app.getAvatars();
 	$scope.mensagens = bd_app.getMensagens();
 	$scope.usrAtual = null;
+
+	$scope.getData = function() {
+		return $filter('date')(new Date(), "dd/MM/yyyy - HH:mm");
+	}
 
 	if ($localStorage.usuarioChatId != null) {
 		$scope.usrAtual = $localStorage.usuarioChatId;
@@ -131,11 +136,12 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 		$scope.codigoAcesso = $localStorage.ultimoAcesso;
 	}
 	
-	$scope.enviarMsg = function(dono, id) {
+	$scope.enviarMsg = function(dono, id, data) {
 		bd_app.enviarMensagem(
 			$scope.corpoMsg,
 			dono,
-			id
+			id,
+			$scope.getData()
 		);
 
 		$scope.corpoMsg = '';
@@ -180,6 +186,8 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 			$scope.avatarUsuario
 		);
 
+		bd_app.sistemaLogin("entrou.", $rootScope.usuarioChatId);
+
 		$scope.nickUsuario = '';
 		$scope.mundoUsuario = '';
 		$scope.avatarUsuario = '';
@@ -191,6 +199,7 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 
 	$scope.loginContaExistente = function() {
 		bd_app.loginContaExistente($scope.codigoAcesso);
+		bd_app.sistemaLogin("entrou.", $rootScope.usuarioChatId);
 
 		$scope.usrAtual = $localStorage.usuarioChatId;
 		$localStorage.ultimoAcesso = $scope.usrAtual;
@@ -200,7 +209,7 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 	$scope.logoutChat = function() {
 		$scope.codigoAcesso = $localStorage.ultimoAcesso;
 		$scope.usrAtual = null;
-		
+		bd_app.sistemaLogout('saiu.', $rootScope.usuarioChatId);
 		bd_app.logoutChat();
 	}
 
@@ -270,11 +279,29 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 		}
 	}
 
-	this.enviarMensagem = function(corpo, dono, id) {
+	this.enviarMensagem = function(corpo, dono, id, data) {
+		
 		rootChat.child('Mensagens').push({
 			Corpo: corpo,
 			Dono: dono,
-			Id: id
+			Id: id,
+			Data: data
+		});
+	}
+
+	this.sistemaLogin = function(corpo, id) {
+		rootChat.child('Mensagens').push({
+			Corpo: corpo,
+			Id: id,
+			Sistema: true
+		});
+	}
+
+	this.sistemaLogout = function(corpo, id) {
+		rootChat.child('Mensagens').push({
+			Corpo: corpo,
+			Id: id,
+			Sistema: true
 		});
 	}
 
@@ -344,6 +371,8 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 		rootChat.child('Usuarios').child($rootScope.usuarioChatId).update({
 			"Online": false
 		});
+
+
 
 		$rootScope.usuarioChatId = null;
 		$localStorage.usuarioChatId = null;
