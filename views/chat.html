@@ -19,7 +19,7 @@
 					<img class="online-{{getDonoMsg(msg.Id, 'Online')}}" src="{{getDonoMsg(msg.Id,'Avatar')}}">
 					<p class="chat-message">
 						<b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b>: <br>{{msg.Corpo}}
-						<span class="data-msg">{{getDonoMsg(msg.Id, 'Mundo')}} - {{msg.Data}}</p>
+						<span class="data-msg">{{msg.Data}}</p>
 					</p>
 					
 				</div>
@@ -52,16 +52,16 @@
 	<br><br>
 	
 	<form ng-submit="loginContaExistente()">
-		<div class="row">
-			<div class="col-xs-10">
-				<input class="form-control" type="text" placeholder="Código de acesso" ng-model="codigoAcesso" required>
-			</div>
-
-			<div class="col-xs-2">
-				<button class="btn btn-success" type="submit">Entrar</button>
-			</div>
-		</div>
-		
+		<div class="row">			
+			<div class="col-lg-12">
+				<div class="input-group">
+					<input class="form-control" type="text" placeholder="Código de acesso" ng-model="codigoAcesso" required>
+					<span class="input-group-btn">
+						<button class="btn btn-info" type="submit"><b>Entrar</b></button>
+					</span>
+				</div><!-- /input-group -->
+			</div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
 	</form>
 
 	<br>
@@ -69,35 +69,37 @@
 	<span class="subtitulo-chat">Login com novo usuário</span>
 	<br><br>
 	<div class="row">
-		<form ng-submit="criarUsuario()">
-			<input type="text" class="form-control" placeholder="Nick" ng-model="nickUsuario" required>
-			<br>
-			<select class="form-control" ng-model="mundoUsuario" required>
-				<option value="">Selecione um mundo</option>
-				<option value="BR1 - Arvahal">BR1 - Arvahal</option>
-				<option value="BR2 - Brisgard">BR2 - Brisgard</option>
-				<option value="BR3 - Cirgard">BR3 - Cirgard</option>
-				<option value="BR4 - Dinegu">BR4 - Dinegu</option>
-				<option value="BR5 - East-Nagach">BR5 - East-Nagach</option>
-				<option value="BR6 - Fel Dranghyr">BR6 - Fel Dranghyr</option>
-				<option value="BR7 - Greifental">BR7 - Greifental</option>
-				<option value="BR8 - Houndsmoor">BR8 - Houndsmoor</option>
-				<option value="BR9 - Jaims">BR9 - Jaims</option>
-			</select>
-			<br>
+		<div class="col-lg-12">
+			<form ng-submit="criarUsuario()">
+				<input type="text" class="form-control" placeholder="Nick" ng-model="nickUsuario" required>
+				<br>
+				<select class="form-control" ng-model="mundoUsuario" required>
+					<option value="">Selecione um mundo</option>
+					<option value="BR1 - Arvahal">BR1 - Arvahal</option>
+					<option value="BR2 - Brisgard">BR2 - Brisgard</option>
+					<option value="BR3 - Cirgard">BR3 - Cirgard</option>
+					<option value="BR4 - Dinegu">BR4 - Dinegu</option>
+					<option value="BR5 - East-Nagach">BR5 - East-Nagach</option>
+					<option value="BR6 - Fel Dranghyr">BR6 - Fel Dranghyr</option>
+					<option value="BR7 - Greifental">BR7 - Greifental</option>
+					<option value="BR8 - Houndsmoor">BR8 - Houndsmoor</option>
+					<option value="BR9 - Jaims">BR9 - Jaims</option>
+				</select>
+				<br>
 
-			<section class="chatavatar form-group">
+				<section class="chatavatar form-group">
 
-				<label ng-repeat="avatar in avatars">
-					<input type="radio" name="avatar1" value="{{avatar.Url}}" ng-model="$parent.avatarUsuario">
-					<img src="{{avatar.Url}}" title="Escolher este avatar">
-				</label>
+					<label ng-repeat="avatar in avatars">
+						<input type="radio" name="avatar1" value="{{avatar.Url}}" ng-model="$parent.avatarUsuario">
+						<img src="{{avatar.Url}}" title="Escolher este avatar">
+					</label>
 
-			</section>
+				</section>
 
-			<br>
-			<button class="btn btn-success" type="submit">Entrar</button>
-		</form>
+				<br>
+				<button class="btn btn-success" type="submit">Cadastrar</button>
+			</form>
+		</div>
 	</div>
 </div>
 
@@ -111,7 +113,7 @@
 
 			<div class="modal-body usuariosOnline" style="height: 400px; overflow-x: hidden; overflow-y: scroll;">
 				<ul>
-					<li ng-repeat="usr in usuarios | orderBy: 'Nick' | orderBy:'-Online'">
+					<li ng-repeat="usr in usuarios | orderBy: 'Nick' | orderBy:'-Online' | filter:filtroUser">
 						<div class="chat card-usr">
 							<img src="{{usr.Avatar}}" class="online-{{usr.Online}}"> 
 							<p class="detalhes-usr"><span class="nick">{{usr.Nick}}</span><br><span class="mundo">{{usr.Mundo}}</span></p>
@@ -121,7 +123,16 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+				<div class="row">	
+					<div class="col-lg-12">
+						<div class="input-group">
+							<input class="form-control" type="text" placeholder="Buscar usuário" ng-model="filtroUser.Nick">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" data-dismiss="modal"><b>Fechar</b></button>
+							</span>
+						</div><!-- /input-group -->
+					</div><!-- /.col-lg-6 -->
+				</div><!-- /.row -->
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

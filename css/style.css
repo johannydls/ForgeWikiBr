@@ -245,7 +245,7 @@ table .accordion {
 	font-variant: sub;
 
 	position: absolute;
-	bottom: 0px;
+	top: 0px;
 	right: 6px;
 	color: #757575;
 	font-size: 10px;
