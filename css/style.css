@@ -239,13 +239,16 @@ table .accordion {
 }
 
 .data-msg {
+	-webkit-font-variant: sub;
+	-moz-font-variant: sub;
+	-o-font-variant: sub;
 	font-variant: sub;
+
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
 	right: 6px;
-	font-weight: 600;
 	color: #757575;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 .msg-sistema-p {

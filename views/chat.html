@@ -18,10 +18,8 @@
 				<div ng-show="{{!msg.Sistema}}" class="chat" ng-class="{self:getDonoMsg(msg.Id,'Id')==usrAtual, friend:getDonoMsg(msg.Id,'Id') != usrAtual}">
 					<img class="online-{{getDonoMsg(msg.Id, 'Online')}}" src="{{getDonoMsg(msg.Id,'Avatar')}}">
 					<p class="chat-message">
-						<b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b> 
-						<i><small>({{getDonoMsg(msg.Id, 'Mundo')}})</small></i>: 
-						<br>{{msg.Corpo}}
-						<span class="data-msg">{{msg.Data}}</p>
+						<b><span ng-class="{admin:getDonoMsg(msg.Id, 'Admin')}">{{getDonoMsg(msg.Id, 'Nick')}}</span></b>: <br>{{msg.Corpo}}
+						<span class="data-msg">{{getDonoMsg(msg.Id, 'Mundo')}} - {{msg.Data}}</p>
 					</p>
 					
 				</div>
