@@ -353,6 +353,12 @@ table .accordion {
 	padding: 3px 9px !important;
 }
 
+.usuariosOnline {
+	height: 400px; 
+	overflow-x: hidden; 
+	overflow-y: scroll;
+}
+
 .usuariosOnline ul {
 	list-style: none;
 	display: flex;

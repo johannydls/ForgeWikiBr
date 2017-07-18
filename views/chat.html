@@ -111,7 +111,7 @@
 				<h4 class="modal-title">Usuários Cadastrados</h4>
 			</div>
 
-			<div class="modal-body usuariosOnline" style="height: 400px; overflow-x: hidden; overflow-y: scroll;">
+			<div class="modal-body usuariosOnline">
 				<ul>
 					<li ng-repeat="usr in usuarios | orderBy: 'Nick' | orderBy:'-Online' | filter:filtroUser">
 						<div class="chat card-usr">
