@@ -316,6 +316,15 @@ table .accordion {
 	overflow-y: scroll;
 }
 
+.chatavatar::-webkit-scrollbar {
+	width: 10px;
+}
+
+.chatavatar::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,0.1);
+}
+
 .chatavatar ul {
 	list-style: none;
 	display: flex;
