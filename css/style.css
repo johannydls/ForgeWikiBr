@@ -227,6 +227,7 @@ table .accordion {
 	border-radius: 10px;
 	font-size: 18px;
 	position: relative;
+	word-wrap: break-word;
 }
 
 .friend .chat-message {
