@@ -1,0 +1,25 @@
+<div class="listaDeItens">
+	<ul>
+		<li dir-paginate="unidade in listaUnidades | orderBy:'Nome' | itemsPerPage: 6">
+			<div class="card text-center">
+				<div class="imgs" width="100px" height="100px" >
+					
+					<img class="avatar" src="{{unidade.Imagem}}" width="100px" ng-click="toggleClass($event, 'transparent')" title="Clique para ver a unidade">
+
+					<img class="avatar2" src="{{unidade.Imagem2}}" ng-show="{{unidade.Imagem2}}">
+
+					<img class="avatar2" src="{{unidade.Imagem}}" width="100px" ng-show="{{!unidade.Imagem2}}">
+
+				</div>
+
+				<h4><b><a href="#!/admin/listaUnidades/{{unidade.$id}}">{{unidade.Nome}}</a></b></h4>
+				<h5><b>{{unidade.Era}}</b></h5>
+				<br>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div class="text-center">
+	<dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+</div>

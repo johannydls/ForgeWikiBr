@@ -1,24 +1,23 @@
 <div class="text-center">
-<h1>Adicionar nova unidade militar</h1>
+<h1>Editar unidade militar</h1>
 
 <div class="row">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 		<br>
-		<form ng-submit="addUnidade()">
-			<input type="text" class="form-control" placeholder="Nome" ng-model="nomeUnidade">
+		<form ng-submit="">
+			<input type="text" value="{{unidadeDetalhe.Nome}}" class="form-control">
 			<br>
 			<select ng-model="tipoUnidade" class="form-control" >
-				<option value="Unidade Ligeira">Unidade Ligeira</option>
-				<option value="Unidade Pesada">Unidade Pesada</option>
-				<option value="Unidade Rápida">Unidade Rápida</option>
-				<option value="Unidade de Artilharia">Unidade de Artilharia</option>
-				<option value="Unidade de Curto Alcance">Unidade de Curto Alcance</option>
+				<option ng-selected="{{1==1}}" value="Unidade Ligeira">Unidade Ligeira</option>
+				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade Pesada'" value="Unidade Pesada">Unidade Pesada</option>
+				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade Rápida'" value="Unidade Rápida">Unidade Rápida</option>
+				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade de Artilharia'" value="Unidade de Artilharia">Unidade de Artilharia</option>
+				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade de Curto Alcance'" value="Unidade de Curto Alcance">Unidade de Curto Alcance</option>
 			</select>
 			<br>
 			<select ng-model="eraUnidade" class="form-control">
-				<option value="">Todas as Eras</option>
-				<option value="Sem era definida" default>Sem era definida</option>
+				<option ng-selected="unidadeDetalhe.Era == 'Sem era definida'" value="Sem era definida">Sem era definida</option>
 				<option value="Idade da Pedra">Idade da Pedra</option>
 				<option value="Idade do Bronze">Idade do Bronze</option>
 				<option value="Idade do Ferro">Idade do Ferro</option>
@@ -37,15 +36,17 @@
 				<option value="Era do Futuro Oceânico">Futuro Oceânico</option>
 			</select>
 			<br>
-			<input type="number" class="form-control" min="0" placeholder="Ataque" ng-model="atkUnidade">
+			<input value="{{unidadeDetalhe.Ataque}}" type="number" class="form-control" min="0" placeholder="Ataque" ng-model="atkUnidade">
 			<br>
-			<input type="number" class="form-control" min="0" placeholder="Defesa" ng-model="defUnidade">
+			<input value="{{unidadeDetalhe.Defesa}}" type="number" class="form-control" min="0" placeholder="Defesa" ng-model="defUnidade">
 			<br>
-			<input type="number" class="form-control" min="0" placeholder="Alcance" ng-model="alcanceUnidade">
+			<input value="{{unidadeDetalhe.Alcance}}" type="number" class="form-control" min="0" placeholder="Alcance" ng-model="alcanceUnidade">
 			<br>
-			<input type="number" class="form-control" min="0" placeholder="Movimento" ng-model="movimentoUnidade">
+			<input value="{{unidadeDetalhe.Movimento}}" type="number" class="form-control" min="0" placeholder="Movimento" ng-model="movimentoUnidade">
 			<br>
-			<input type="text" class="form-control" min="0" placeholder="Link imagem" ng-model="imagemUnidade">
+			<input value="{{unidadeDetalhe.Imagem}}" type="text" class="form-control" placeholder="Link imagem" ng-model="imagemUnidade">
+			<br>
+			<input value="{{unidadeDetalhe.Imagem2}}" type="text" class="form-control" placeholder="Link imagem 2" ng-model="imagemUnidade2">
 			<br>
 			<select ng-model="iconeUnidade" class="form-control" >
 				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fligeira.png?alt=media&token=0e87a888-317f-48b5-81a7-ec088162b18d">Unidade Ligeira</option>
@@ -55,9 +56,18 @@
 				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fcurto_alcance.png?alt=media&token=0437c36d-8c40-4d49-9054-f808e3f84e40">Unidade de Curto Alcance</option>
 			</select>
 			<br>
-			<button class="btn btn-primary form-control" type="submit">Adicionar</button>
+			<button class="btn btn-primary form-control" type="submit">Salvar</button>
 		</form>
 	</div>
 	<div class="col-md-3"></div>
 </div>
+</div>
+
+
+<div>
+	{{unidadeDetalhe.Nome}}<br>
+	{{unidadeDetalhe.Tipo}}<br>
+	<br>
+	<input type="text" value="asdasdsadasdsada" class="form-control">
+	<a href="#!/admin/listaUnidades">Voltar</a>
 </div>

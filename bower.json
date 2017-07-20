@@ -1,0 +1,27 @@
+{
+	"name": "ForgeWikiBr",
+	"authors": [
+		"Johanny LS <johanny.dev@gmail.com>"
+	],
+	"description": "Aplicação com informações para jogadores de Forge of Empires",
+	"main": "",
+	"keywords": [
+		"Forge",
+		"Wikipedia",
+		"ForgeOfEmpires",
+		"Foe"
+	],
+	"license": "MIT",
+	"homepage": "",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"bower_components",
+	],
+	"dependencies": {
+    	"angular": "^1.6.4",
+    	"angular-route": "^1.6.4",
+    	"bootstrap": "^3.3.7"
+  }
+
+}

@@ -21,9 +21,24 @@ app.config(function($routeProvider) {
 			controller: 'loginController'
 		})
 		.when('/admin', {
-			title: 'Gerenciador',
-			templateUrl: 'views/gerenciador.html',
-			controller: 'gerenciadorController'
+			title: 'Administração',
+			templateUrl: 'views/admin.html',
+			controller: 'adminController'
+		})
+		.when('/admin/novaUnidade', {
+			title: 'Admin - Nova unidade',
+			templateUrl:'views/admin/nova_unidade.html',
+			controller: 'adminController'
+		})
+		.when('/admin/listaUnidades', {
+			title: 'Admin - Lista de Unidades',
+			templateUrl: 'views/admin/lista_unidades.html',
+			controller: 'adminController'
+		})
+		.when('/admin/listaUnidades/:id', {
+			title: 'Admin - Editar Unidade',
+			templateUrl: 'views/admin/detalhe_unidade.html',
+			controller: 'adminController'
 		})
 		.when('/eventos', {
 			title: 'Eventos',
@@ -43,7 +58,7 @@ app.config(function($routeProvider) {
 		});
 });
 
-app.controller('gerenciadorController', ['$scope', 'bd_app', function($scope, bd_app) {
+app.controller('adminController', ['$scope', '$routeParams', 'bd_app', function($scope, $routeParams, bd_app) {
 
 	$scope.addUnidade = function() {
 
@@ -55,6 +70,7 @@ app.controller('gerenciadorController', ['$scope', 'bd_app', function($scope, bd
 						  $scope.alcanceUnidade,
 						  $scope.movimentoUnidade,
 						  $scope.imagemUnidade,
+						  $scope.imagemUnidade2,
 						  $scope.iconeUnidade);
 		
 		$scope.nomeUnidade = '';
@@ -63,8 +79,18 @@ app.controller('gerenciadorController', ['$scope', 'bd_app', function($scope, bd
 		$scope.defUnidade = '';
 		$scope.alcanceUnidade = '';
 		$scope.movimentoUnidade = '';
-		$scope.imagemUnidade = '';
+		$scope.imagemUnidade = '',
+		$scope.imagemUnidade2 = '';
 	}
+
+	$scope.listaUnidades = bd_app.getUnidadesMilitares();
+
+	$scope.unidadeDetalhe = bd_app.getUnidade($routeParams.id);
+
+	$scope.toggleClass = function($event, className) {
+		className = className || 'transparent';
+		$($event.target).toggleClass(className);
+	};
 
 }]);
 
@@ -331,7 +357,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 		return Math.round(valor + ((bonus/100) * valor));
 	}
 
-	this.addUnidade = function(nome, tipo, era, atk, def, alcance, movimento, imagem, tipoIcone) {
+	this.addUnidade = function(nome, tipo, era, atk, def, alcance, movimento, imagem, imagem2, tipoIcone) {
 		rootRef.child('UnidadeMilitar').push({
 			Nome: nome,
 			Tipo: tipo,
@@ -341,6 +367,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			Alcance: alcance,
 			Movimento: movimento,
 			Imagem: imagem,
+			Imagem2: imagem2,
 			TipoIcone: tipoIcone
 		});
 	};
@@ -358,6 +385,14 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 		});
 
 		$localStorage.usuarioLogado = $rootScope.usuarioLogado;
+	}
+
+	this.getUnidade = function(id) {
+		for (i = 0; i < this.unidadesMilitares.length; i++) {
+			if (this.unidadesMilitares[i].$id == id) {
+				return this.unidadesMilitares[i];
+			}
+		}
 	}
 
 	this.logout = function() {
@@ -402,10 +437,10 @@ app.directive('ngEnter', function() {
 
 app.run(function ($rootScope, $location, $sessionStorage, $localStorage) {
 
-	$rootScope.usuarioLogado = $sessionStorage.usuarioLogado;
+	$rootScope.usuarioLogado = $localStorage.usuarioLogado;
 	$rootScope.usuarioChatId = $localStorage.usuarioChatId;
 
-	var rotasBloqueadasNaoLogados = ['/gerenciador'];
+	var rotasBloqueadasNaoLogados = ['/admin'];
 	
 	var rotasBloqueadasLogados = [];
 

@@ -1,0 +1,65 @@
+<div class="text-center">
+<h1>Adicionar nova unidade militar</h1>
+
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<br>
+		<form ng-submit="addUnidade()">
+			<input type="text" class="form-control" placeholder="Nome" ng-model="nomeUnidade">
+			<br>
+			<select ng-model="tipoUnidade" class="form-control" >
+				<option value="Unidade Ligeira">Unidade Ligeira</option>
+				<option value="Unidade Pesada">Unidade Pesada</option>
+				<option value="Unidade Rápida">Unidade Rápida</option>
+				<option value="Unidade de Artilharia">Unidade de Artilharia</option>
+				<option value="Unidade de Curto Alcance">Unidade de Curto Alcance</option>
+			</select>
+			<br>
+			<select ng-model="eraUnidade" class="form-control">
+				<option value="">Todas as Eras</option>
+				<option value="Sem era definida">Sem era definida</option>
+				<option value="Idade da Pedra">Idade da Pedra</option>
+				<option value="Idade do Bronze">Idade do Bronze</option>
+				<option value="Idade do Ferro">Idade do Ferro</option>
+				<option value="Início da Idade Média">Início da Idade Média</option>
+				<option value="Alta Idade Média">Alta Idade Média</option>
+				<option value="Finais da Idade Media">Finais da Idade Media</option>
+				<option value="Era Colonial">Era Colonial</option>
+				<option value="Era Industrial">Era Industrial</option>
+				<option value="Era Progressiva">Era Progressiva</option>
+				<option value="Era Moderna">Era Moderna</option>
+				<option value="Era Pós-Moderna">Era Pós-Moderna</option>
+				<option value="Era Contemporânea">Era Contemporânea</option>
+				<option value="Era do Amanhã">Era do Amanhã</option>
+				<option value="Era do Futuro">Era do Futuro</option>
+				<option value="Era do Futuro Ártico">Era do Futuro Ártico</option>
+				<option value="Era do Futuro Oceânico">Futuro Oceânico</option>
+			</select>
+			<br>
+			<input type="number" class="form-control" min="0" placeholder="Ataque" ng-model="atkUnidade">
+			<br>
+			<input type="number" class="form-control" min="0" placeholder="Defesa" ng-model="defUnidade">
+			<br>
+			<input type="number" class="form-control" min="0" placeholder="Alcance" ng-model="alcanceUnidade">
+			<br>
+			<input type="number" class="form-control" min="0" placeholder="Movimento" ng-model="movimentoUnidade">
+			<br>
+			<input type="text" class="form-control" placeholder="Link imagem" ng-model="imagemUnidade">
+			<br>
+			<input type="text" class="form-control" placeholder="Link imagem 2" ng-model="imagemUnidade2">
+			<br>
+			<select ng-model="iconeUnidade" class="form-control" >
+				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fligeira.png?alt=media&token=0e87a888-317f-48b5-81a7-ec088162b18d">Unidade Ligeira</option>
+				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fpesada.png?alt=media&token=087d5a96-f3c8-4505-81b8-e3b3553d06ff">Unidade Pesada</option>
+				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Frapida.png?alt=media&token=6b7b34bd-193c-413e-aced-210ea9efbb50">Unidade Rápida</option>
+				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fartilharia.png?alt=media&token=7d3ba3b7-9a55-4310-a89e-88b78d56b679">Unidade de Artilharia</option>
+				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fcurto_alcance.png?alt=media&token=0437c36d-8c40-4d49-9054-f808e3f84e40">Unidade de Curto Alcance</option>
+			</select>
+			<br>
+			<button class="btn btn-primary form-control" type="submit">Adicionar</button>
+		</form>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+</div>

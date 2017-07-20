@@ -45,8 +45,10 @@
 				<select ng-model="filtroBonus" class="form-control" >
 					<option value="">Todos os Bônus</option>
 					<option value="Na Floresta">Na Floresta</option>
+					<option value="Nas Colinas">Nas Colinas</option>
 					<option value="Nas Planícies">Nas Planícies</option>
 					<option value="Nas Rochas">Nas Rochas</option>
+					<option value="Nas Trincheiras">Nas Trincheiras</option>
 					<option value="No Entrincheiramento">No Entrincheiramento</option>
 					<option value="Nos Arbustos">Nos Arbustos</option>
 					<option value="vs. Unidade de Artilharia">vs. Unidade de Artilharia</option>
@@ -107,8 +109,7 @@
 	<ul>
 
 		<li dir-paginate="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade | itemsPerPage: 3">
-			<h1 ng-show="unidadesMilitaresSemEra.length == 0">Sem unidades</h1>
-		
+
 			<div class="card text-center">
 				
 				<div class="imgs" width="100px" height="100px" >
