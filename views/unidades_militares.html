@@ -20,7 +20,7 @@
 					<option value="Era do Amanhã">Era do Amanhã</option>
 					<option value="Era do Futuro">Era do Futuro</option>
 					<option value="Era do Futuro Ártico">Era do Futuro Ártico</option>
-					<option value="Era do Futuro Oceânico">Futuro Oceânico</option>
+					<option value="Era do Futuro Oceânico">Era do Futuro Oceânico</option>
 				</select>
 			</div>
 		</div>
@@ -84,6 +84,7 @@
 					<option value="Jogada Potente">Jogada Potente</option>
 					<option value="MIRV">MIRV</option>
 					<option value="Moral">Moral</option>
+					<option value="Morteiro Pesado">Morteiro Pesado</option>
 					<option value="Rali">Rali</option>
 					<option value="Recarga">Recarga</option>
 					<option value="Resposta Rápida">Resposta Rápida</option>
@@ -120,12 +121,20 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	<br>
+<br>
+<div class="text-center">
+	<h4>{{filtro.length}} unidades encontradas</h4>
+	<dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+</div>
+
+<div class="listaDeItens">
 	<ul>
 
-		<li dir-paginate="unidade in unidadesMilitares | filter:filtroEra | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade | itemsPerPage: 3">
+		<li dir-paginate="unidade in filtro = (unidadesMilitares | filter:filtroEra | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade) | itemsPerPage: 3">
 
+			
 			<div class="card text-center">
 				
 				<div class="imgs" width="100px" height="100px" >
