@@ -4,6 +4,11 @@ var app = angular.module('foe-wiki', ['ngRoute',
 									  'ngStorage',
 									  'luegg.directives']);
 
+
+
+/*
+	CONFIG: ROTAS
+*/
 app.config(function($routeProvider) {
 	$routeProvider
 		.when('/home', {
@@ -25,6 +30,9 @@ app.config(function($routeProvider) {
 			templateUrl: 'views/admin.html',
 			controller: 'adminController'
 		})
+
+
+
 		.when('/admin/novaUnidade', {
 			title: 'Admin - Nova unidade',
 			templateUrl:'views/admin/nova_unidade.html',
@@ -40,6 +48,48 @@ app.config(function($routeProvider) {
 			templateUrl: 'views/admin/detalhe_unidade.html',
 			controller: 'adminController'
 		})
+
+
+
+		.when('/admin/gerenciarGuildas', {
+			title: 'Admin - Guildas',
+			templateUrl: 'views/admin/ranking_guildas_adm.html',
+			controller: 'adminController'
+		})
+		.when('/admin/gerenciarGuildas/editarRanking', {
+			title: 'Admin - Guildas - Editar Ranking',
+			templateUrl: 'views/admin/ranking_guildas_edit.html',
+			controller: 'adminController'
+		})
+
+
+
+		.when('/admin/gerenciarJogadores', {
+			title: 'Admin - Jogadores',
+			templateUrl: 'views/admin/ranking_jogadores_adm.html',
+			controller: 'adminController'
+		})
+		.when('/admin/gerenciarJogadores/editarRanking', {
+			title: 'Admin - Jogadores - Editar Ranking',
+			templateUrl: 'views/admin/ranking_jogadores_edit.html',
+			controller: 'adminController'
+		})
+
+
+
+		.when('/rankingGuildas', {
+			title: 'Ranking de Guildas',
+			templateUrl: 'views/ranking_guildas.html',
+			controller: 'adminController'
+		})
+		.when('/rankingJogadores', {
+			title:'Ranking de Jogadores',
+			templateUrl:'views/ranking_jogadores.html',
+			controller: 'adminController'
+		})
+
+
+
 		.when('/eventos', {
 			title: 'Eventos',
 			templateUrl: 'views/eventos.html'
@@ -53,13 +103,24 @@ app.config(function($routeProvider) {
 			templateUrl: 'views/chat.html',
 			controller: 'chatController'
 		})
+
+
+
 		.otherwise({ 
 			redirectTo: '/home' 
 		});
 });
 
+
+
+/*
+	CONTROLLER: ADMINISTRAÇÃO
+*/
 app.controller('adminController', ['$scope', '$routeParams', 'bd_app', function($scope, $routeParams, bd_app) {
 
+	/*
+		ADMIN: UNIDADES MILITARES
+	*/
 	$scope.addUnidade = function() {
 
 		bd_app.addUnidade($scope.nomeUnidade, 
@@ -92,8 +153,81 @@ app.controller('adminController', ['$scope', '$routeParams', 'bd_app', function(
 		$($event.target).toggleClass(className);
 	};
 
+
+
+	/*
+		ADMIN: RANKING DE GUILDAS
+	*/
+	$scope.rankingGuildas = bd_app.getRankingGuildas();
+
+	$scope.currentPage = 1;
+
+	$scope.addGuilda = function() {
+		bd_app.addGuilda($scope.nomeGuilda, $scope.mundoGuilda, $scope.prestigioGuilda);
+		$scope.nomeGuilda = '';
+		$scope.prestigioGuilda = '';
+	}
+
+	$scope.editGuilda = function(id, nome, mundo, prestigio) {
+
+		bd_app.editGuilda(
+			id,
+			nome,
+			mundo,
+			prestigio
+		);
+
+	}
+
+	$scope.removeGuilda = function(id) {
+		bd_app.removeGuilda(id);
+	}
+
+
+
+
+	/*
+		ADMIN: RANKING DE JOGADORES
+	*/
+	$scope.rankingJogadores = bd_app.getRankingJogadores();
+
+	$scope.addJogador = function() {
+		bd_app.addJogador(
+			$scope.nomeJogador, 
+			$scope.guildaJogador, 
+			$scope.mundoJogador, 
+			$scope.pontosJogador,
+			$scope.batalhasJogador
+		);
+
+		$scope.nomeJogador = '';
+		$scope.guildaJogador = '';
+		$scope.pontosJogador = '';
+		$scope.batalhasJogador = '';
+	}
+
+	$scope.editJogador = function(id, nome, guilda, mundo, pontos, batalhas) {
+		bd_app.editJogador(
+			id,
+			nome,
+			guilda,
+			mundo,
+			pontos,
+			batalhas
+		)
+	}
+
+	$scope.removeJogador = function(id) {
+		bd_app.removeJogador(id);
+	}
+
 }]);
 
+
+
+/*
+	CONTROLLER: UNIDADES MILITARES
+*/
 app.controller('unidadesController', ['$scope', 'bd_app', function($scope, bd_app) {
 
 	$scope.unidadesMilitares = bd_app.getUnidadesMilitares();
@@ -109,6 +243,12 @@ app.controller('unidadesController', ['$scope', 'bd_app', function($scope, bd_ap
 
 }]);
 
+
+
+
+/*
+	CONTROLLER: PAGINA PRINCIPAL
+*/
 app.controller('pageController', ['$scope','$window','bd_app', function($scope, $window, bd_app) {
 
 	$scope.logout = function() {
@@ -123,6 +263,11 @@ app.controller('pageController', ['$scope','$window','bd_app', function($scope, 
 
 }]);
 
+
+
+/*
+	CONTROLLER: LOGIN
+*/
 app.controller('loginController', ['$scope', 'bd_app', function($scope, bd_app) {
 
 	$scope.logar = function(user) {
@@ -144,6 +289,11 @@ app.controller('loginController', ['$scope', 'bd_app', function($scope, bd_app) 
 
 }]);
 
+
+
+/*
+	CONTROLLER: CHAT
+*/
 app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope', '$filter', 
 	function ($scope, bd_app, $localStorage, $rootScope, $filter) {
 
@@ -244,6 +394,10 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 }]);
 
 
+
+/*
+	SERVICE: BANCO DE DADOS
+*/
 app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', '$window', 
 				function ($rootScope, $firebaseArray, $location, $localStorage, $window) {
 	
@@ -261,12 +415,15 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 	var rootRef = firebase.database().ref().child('Recursos');
 	var rootAuth = firebase.database().ref().child('Admin');
 	var rootChat = firebase.database().ref().child('Chat');
+	var rootContent = firebase.database().ref().child('Conteudo');
 
 	this.unidadesMilitares = $firebaseArray(rootRef.child('UnidadeMilitar'));
 	this.usuarioAdmin = $firebaseArray(rootAuth);
 	this.avatars = $firebaseArray(rootChat.child('Avatars'));
 	this.usuarios = $firebaseArray(rootChat.child('Usuarios'));
 	this.mensagens = $firebaseArray(rootChat.child('Mensagens'));
+	this.rankingGuildas = $firebaseArray(rootContent.child('RankingGuildas'));
+	this.rankingJogadores = $firebaseArray(rootContent.child('RankingJogadores'));
 	
 	this.getUnidadesMilitares = function() {
 		return this.unidadesMilitares;
@@ -282,6 +439,14 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 
 	this.getMensagens = function() {
 		return this.mensagens;
+	}
+
+	this.getRankingGuildas = function() {
+		return this.rankingGuildas;
+	}
+
+	this.getRankingJogadores = function() {
+		return this.rankingJogadores;
 	}
 
 	this.criarUsuario = function(nick, mundo, avatar) {
@@ -371,6 +536,50 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			TipoIcone: tipoIcone
 		});
 	};
+
+	this.addGuilda = function(nome, mundo, prestigio) {
+		rootContent.child('RankingGuildas').push({
+			Nome: nome,
+			Mundo: mundo,
+			Prestigio: prestigio
+		});
+	};
+
+	this.editGuilda = function(id, nome, mundo, prestigio) {
+		rootContent.child('RankingGuildas').child(id).update({
+			"Nome": nome,
+			"Mundo": mundo,
+			"Prestigio": prestigio
+		});
+	};
+
+	this.removeGuilda = function(id) {
+		rootContent.child('RankingGuildas').child(id).set(null);
+	};
+
+	this.addJogador = function(nome, guilda, mundo, pontos, batalhas) {
+		rootContent.child('RankingJogadores').push({
+			Nome: nome,
+			Guilda: guilda,
+			Mundo: mundo,
+			Pontos: pontos,
+			Batalhas: batalhas
+		});
+	};
+
+	this.editJogador = function(id, nome, guilda, mundo, pontos, batalhas) {
+		rootContent.child('RankingJogadores').child(id).update({
+			"Nome": nome,
+			"Guilda": guilda,
+			"Mundo": mundo,
+			"Pontos": pontos,
+			"Batalhas": batalhas
+		});
+	};
+
+	this.removeJogador = function(id) {
+		rootContent.child('RankingJogadores').child(id).set(null);
+	}
 
 	this.validaLogin = function(user) {
 		

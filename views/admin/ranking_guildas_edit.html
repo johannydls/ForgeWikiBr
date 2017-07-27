@@ -1,0 +1,61 @@
+<div style="position: relative;"><a style="position: absolute;" class="btn btn-default pull-left" href="#!/admin/gerenciarGuildas">Voltar</a></div>
+
+<div class="text-center">
+	<h3 >Editar Guildas</h3>
+</div>
+<br><br>
+
+<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<input class="form-control" type="text" placeholder="Filtrar por nome" ng-model="filterNome.Nome">
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-group">
+				<select class="form-control" ng-model="filterMundo">
+					<option value="">Todos os Mundos</option>
+					<option value="BR1 - Arvahal">BR1 - Arvahal</option>
+					<option value="BR2 - Brisgard">BR2 - Brisgard</option>
+					<option value="BR3 - Cirgard">BR3 - Cirgard</option>
+					<option value="BR4 - Dinegu">BR4 - Dinegu</option>
+					<option value="BR5 - East-Nagach">BR5 - East-Nagach</option>
+					<option value="BR6 - Fel Dranghyr">BR6 - Fel Dranghyr</option>
+					<option value="BR7 - Greifental">BR7 - Greifental</option>
+					<option value="BR8 - Houndsmoor">BR8 - Houndsmoor</option>
+					<option value="BR9 - Jaims">BR9 - Jaims</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+<br>
+<div class="table-responsive">
+<table class="table table-hover table-bordered table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Nome</th>
+			<th>Prestígio</th>
+			<th>Mundo</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr dir-paginate="guilda in rankingGuildas | orderBy:'Prestigio' | filter:filterNome | filter:filterMundo | reverse | itemsPerPage: 10" current-page="currentPage">
+			<td>{{ ($index + 1) + (currentPage - 1) * 10 }}</td>
+			<td><input type="text" class="form-control" ng-model="nomeGuildaEdt" ng-init="nomeGuildaEdt = guilda.Nome"></td>
+			<td><input type="number" class="form-control" ng-model="prestigioGuildaEdt" ng-init="prestigioGuildaEdt = guilda.Prestigio"></td>
+			<td><input type="text" class="form-control" ng-model="mundoGuildaEdt" ng-init="mundoGuildaEdt = guilda.Mundo"></td>
+			<td><button class="btn btn-success" ng-click="editGuilda(guilda.$id, nomeGuildaEdt, mundoGuildaEdt, prestigioGuildaEdt)"><i class="fa fa-floppy-o"></i></button></td>
+			<td><button class="btn btn-danger" title="Excluir" ng-click="removeGuilda(guilda.$id)"><i class="fa fa-trash-o"></i></button></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div class="text-center">
+	<dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+</div>

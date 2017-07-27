@@ -1,0 +1,39 @@
+<div class="text-center">
+	<span class="subtitulo-chat">Adicionar Jogador</span> / <span><a href="#!/admin/gerenciarJogadores/editarRanking">Editar Ranking</a></span>
+</div>
+<br><br>
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<form ng-submit="addJogador()">
+			<input type="text" class="form-control" placeholder="Nome do Jogador" ng-model="nomeJogador" required>
+			<br>
+
+			<input type="text" class="form-control" placeholder="Guilda do Jogador" ng-model="guildaJogador" required>
+			<br>
+
+			<select class="form-control" ng-model="mundoJogador" required>
+				<option value="">Selecione um mundo</option>
+				<option value="BR1 - Arvahal">BR1 - Arvahal</option>
+				<option value="BR2 - Brisgard">BR2 - Brisgard</option>
+				<option value="BR3 - Cirgard">BR3 - Cirgard</option>
+				<option value="BR4 - Dinegu">BR4 - Dinegu</option>
+				<option value="BR5 - East-Nagach">BR5 - East-Nagach</option>
+				<option value="BR6 - Fel Dranghyr">BR6 - Fel Dranghyr</option>
+				<option value="BR7 - Greifental">BR7 - Greifental</option>
+				<option value="BR8 - Houndsmoor">BR8 - Houndsmoor</option>
+				<option value="BR9 - Jaims">BR9 - Jaims</option>
+			</select>
+			<br>
+
+			<input type="number" min="0" placeholder="Pontos" class="form-control" ng-model="pontosJogador" required>
+			<br>
+
+			<input type="number" min="0" placeholder="Batalhas" class="form-control" ng-model="batalhasJogador" required>
+			<br>
+
+			<button class="btn btn-success" type="submit">Adicionar</button>
+		</form>
+	</div>
+	<div class="col-lg-3"></div>
+</div>

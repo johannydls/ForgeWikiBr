@@ -1,4 +1,8 @@
+
+<div style="position: relative;"><a class="btn btn-default" href="#!/admin/listaUnidades" style="position: absolute;">VOLTAR</a></div>
+
 <div class="text-center">
+
 <h1>Editar unidade militar</h1>
 
 <div class="row">
@@ -6,18 +10,24 @@
 	<div class="col-md-6">
 		<br>
 		<form ng-submit="">
-			<input type="text" value="{{unidadeDetalhe.Nome}}" class="form-control">
+			<input type="radio" name="tipoDaUnidade" value="Unidade Ligeira" ng-model="selected">Ligeira |
+			<input type="radio" name="tipoDaUnidade" value="Unidade Pesada" ng-model="selected">Pesada |
+			<input type="radio" name="tipoDaUnidade" value="Unidade Rápida" ng-model="selected">Rápida |
+			<input type="radio" name="tipoDaUnidade" value="Unidade de Curto Alcance" ng-model="selected">Curto Alcance |
+			<input type="radio" name="tipoDaUnidade" value="Unidade de Artilharia" ng-model="selected">Artilharia
+			<br><br>
+			<input type="text" class="form-control" ng-model="nomeUnidade" ng-init="nomeUnidade = unidadeDetalhe.Nome">
 			<br>
-			<select ng-model="tipoUnidade" class="form-control" >
-				<option ng-selected="{{1==1}}" value="Unidade Ligeira">Unidade Ligeira</option>
-				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade Pesada'" value="Unidade Pesada">Unidade Pesada</option>
-				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade Rápida'" value="Unidade Rápida">Unidade Rápida</option>
-				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade de Artilharia'" value="Unidade de Artilharia">Unidade de Artilharia</option>
-				<option ng-selected="unidadeDetalhe.Tipo == 'Unidade de Curto Alcance'" value="Unidade de Curto Alcance">Unidade de Curto Alcance</option>
+			<select ng-model="tipoUnidade" class="form-control" ng-selected="unidadeDetalhe.Tipo">
+				<option ng-selected="selected=='Unidade Ligeira'" value="Unidade Ligeira">Unidade Ligeira</option>
+				<option ng-selected="selected=='Unidade Pesada'" value="Unidade Pesada">Unidade Pesada</option>
+				<option ng-selected="selected=='Unidade Rápida'" value="Unidade Rápida">Unidade Rápida</option>
+				<option ng-selected="selected=='Unidade de Artilharia'" value="Unidade de Artilharia">Unidade de Artilharia</option>
+				<option ng-selected="selected=='Unidade de Curto Alcance'" value="Unidade de Curto Alcance">Unidade de Curto Alcance</option>
 			</select>
 			<br>
 			<select ng-model="eraUnidade" class="form-control">
-				<option ng-selected="unidadeDetalhe.Era == 'Sem era definida'" value="Sem era definida">Sem era definida</option>
+				<option value="Sem era definida">Sem era definida</option>
 				<option value="Idade da Pedra">Idade da Pedra</option>
 				<option value="Idade do Bronze">Idade do Bronze</option>
 				<option value="Idade do Ferro">Idade do Ferro</option>
@@ -44,16 +54,16 @@
 			<br>
 			<input value="{{unidadeDetalhe.Movimento}}" type="number" class="form-control" min="0" placeholder="Movimento" ng-model="movimentoUnidade">
 			<br>
-			<input value="{{unidadeDetalhe.Imagem}}" type="text" class="form-control" placeholder="Link imagem" ng-model="imagemUnidade">
+			<input type="text" class="form-control" placeholder="Link imagem" ng-model="imagemUnidade" ng-init="imagemUnidade = unidadeDetalhe.Imagem">
 			<br>
-			<input value="{{unidadeDetalhe.Imagem2}}" type="text" class="form-control" placeholder="Link imagem 2" ng-model="imagemUnidade2">
+			<input type="text" class="form-control" placeholder="Link imagem 2" ng-model="imagemUnidade2" ng-init="imagemUnidade2 = unidadeDetalhe.Imagem2">
 			<br>
 			<select ng-model="iconeUnidade" class="form-control" >
-				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fligeira.png?alt=media&token=0e87a888-317f-48b5-81a7-ec088162b18d">Unidade Ligeira</option>
-				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fpesada.png?alt=media&token=087d5a96-f3c8-4505-81b8-e3b3553d06ff">Unidade Pesada</option>
-				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Frapida.png?alt=media&token=6b7b34bd-193c-413e-aced-210ea9efbb50">Unidade Rápida</option>
-				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fartilharia.png?alt=media&token=7d3ba3b7-9a55-4310-a89e-88b78d56b679">Unidade de Artilharia</option>
-				<option value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fcurto_alcance.png?alt=media&token=0437c36d-8c40-4d49-9054-f808e3f84e40">Unidade de Curto Alcance</option>
+				<option ng-selected="selected=='Unidade Ligeira'" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fligeira.png?alt=media&token=0e87a888-317f-48b5-81a7-ec088162b18d">Unidade Ligeira</option>
+				<option ng-selected="selected=='Unidade Pesada'" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fpesada.png?alt=media&token=087d5a96-f3c8-4505-81b8-e3b3553d06ff">Unidade Pesada</option>
+				<option ng-selected="selected=='Unidade Rápida'" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Frapida.png?alt=media&token=6b7b34bd-193c-413e-aced-210ea9efbb50">Unidade Rápida</option>
+				<option ng-selected="selected=='Unidade de Artilharia'" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fartilharia.png?alt=media&token=7d3ba3b7-9a55-4310-a89e-88b78d56b679">Unidade de Artilharia</option>
+				<option ng-selected="selected=='Unidade de Curto Alcance'" value="https://firebasestorage.googleapis.com/v0/b/api-foe.appspot.com/o/img%2FtiposDeUnidades%2Fcurto_alcance.png?alt=media&token=0437c36d-8c40-4d49-9054-f808e3f84e40">Unidade de Curto Alcance</option>
 			</select>
 			<br>
 			<button class="btn btn-primary form-control" type="submit">Salvar</button>
@@ -61,13 +71,4 @@
 	</div>
 	<div class="col-md-3"></div>
 </div>
-</div>
-
-
-<div>
-	{{unidadeDetalhe.Nome}}<br>
-	{{unidadeDetalhe.Tipo}}<br>
-	<br>
-	<input type="text" value="asdasdsadasdsada" class="form-control">
-	<a href="#!/admin/listaUnidades">Voltar</a>
 </div>
