@@ -68,12 +68,20 @@
 	border-bottom: 3px solid #560000;
 }
 
-.listaDeItens ul {
+.listaDeItens ul{
 	display: flex;
 	justify-content: space-around;
 	flex-flow: row wrap;
 	padding: 0px;
 	margin: 0px;
+	list-style: none;
+	flex-grow: 1;
+}
+
+.listaButtons ul {
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row wrap;
 	list-style: none;
 	flex-grow: 1;
 }
@@ -334,6 +342,8 @@ table .accordion {
 	align-items: flex-start;
 	justify-content: space-around;
 }
+
+
 
 .chatavatar label > input + img {
 	width: 70px;
