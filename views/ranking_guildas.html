@@ -1,26 +1,27 @@
 
 <div class="text-center"><h3>Ranking contendo as 10 melhores guildas de cada mundo</h3></div>
 <br>
-<div class="table-responsive">
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Posição</th>
-			<th>Nome</th>
-			<th>Prestígio</th>
-			<th>Mundo</th>
-		</tr>
-	</thead>
 
-	<tbody>
-		<tr dir-paginate="guilda in rankingGuildas | orderBy:'Prestigio' | reverse | itemsPerPage: 10" current-page="currentPages">
-			<td>{{ ($index + 1) + (currentPages - 1) * 10 }}</td>
-			<td><b>{{guilda.Nome}}</b></td>
-			<td>{{guilda.Prestigio | number}}</td>
-			<td>{{guilda.Mundo}}</td>
-		</tr>
-	</tbody>
-</table>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Nome</th>
+				<th>Prestígio</th>
+				<th>Mundo</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr dir-paginate="guilda in rankingGuildas | orderBy:'Prestigio' | reverse | itemsPerPage: 10" current-page="currentPages">
+				<td>{{ ($index + 1) + (currentPages - 1) * 10 }}</td>
+				<td><b>{{guilda.Nome}}</b></td>
+				<td>{{guilda.Prestigio | number}}</td>
+				<td>{{guilda.Mundo}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 
 <div class="text-center">
