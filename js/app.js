@@ -611,7 +611,7 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 		rootContent.child('UltimoUpdate').child('1').update({
 			"Data": this.getData()
 		});
-		
+
 		rootContent.child('RankingJogadores').child(id).set(null);
 
 	}

@@ -17,8 +17,8 @@
 		</thead>
 
 		<tbody>
-			<tr dir-paginate="guilda in rankingGuildas | orderBy:'Prestigio' | reverse | itemsPerPage: 10" current-page="currentPages">
-				<td>{{ ($index + 1) + (currentPages - 1) * 10 }}</td>
+			<tr dir-paginate="guilda in rankingGuildas | orderBy:'Prestigio' | reverse | itemsPerPage: 10" current-page="currentPage">
+				<td>{{ ($index + 1) + (currentPage - 1) * 10 }}</td>
 				<td><b>{{guilda.Nome}}</b></td>
 				<td>{{guilda.Prestigio | number}}</td>
 				<td>{{guilda.Mundo}}</td>
@@ -29,4 +29,23 @@
 
 <div class="text-center">
 	<dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+</div>
+
+<div class="listaButtons text-center">
+
+	<ul>
+		<li>
+			<a href="#!/home">
+				<img src="img/btn/home.png">
+			</a>
+			<p>Home</p>
+		</li>
+
+		<li>
+			<a href="#!/rankingJogadores">
+				<img src="img/btn/ranking_2.png">
+			</a>
+			<p>Jogadores</p>
+		</li>
+	</ul>
 </div>
