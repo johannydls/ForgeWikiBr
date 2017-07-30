@@ -116,7 +116,8 @@ app.config(function($routeProvider) {
 /*
 	CONTROLLER: ADMINISTRAÇÃO
 */
-app.controller('adminController', ['$scope', '$routeParams', 'bd_app', function($scope, $routeParams, bd_app) {
+app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routeParams', 'bd_app', 
+						  function($scope, $rootScope, $filter, $routeParams, bd_app) {
 
 	/*
 		ADMIN: UNIDADES MILITARES
@@ -144,6 +145,7 @@ app.controller('adminController', ['$scope', '$routeParams', 'bd_app', function(
 		$scope.imagemUnidade2 = '';
 	}
 
+
 	$scope.listaUnidades = bd_app.getUnidadesMilitares();
 
 	$scope.unidadeDetalhe = bd_app.getUnidade($routeParams.id);
@@ -166,6 +168,7 @@ app.controller('adminController', ['$scope', '$routeParams', 'bd_app', function(
 		bd_app.addGuilda($scope.nomeGuilda, $scope.mundoGuilda, $scope.prestigioGuilda);
 		$scope.nomeGuilda = '';
 		$scope.prestigioGuilda = '';
+		
 	}
 
 	$scope.editGuilda = function(id, nome, mundo, prestigio) {
@@ -302,22 +305,17 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 	$scope.mensagens = bd_app.getMensagens();
 	$scope.usrAtual = null;
 
-	$scope.getData = function() {
-		return $filter('date')(new Date(), "dd/MM/yyyy - HH:mm");
-	}
-
 	if ($localStorage.usuarioChatId != null) {
 		$scope.usrAtual = $localStorage.usuarioChatId;
 		$localStorage.ultimoAcesso = $scope.usrAtual;
 		$scope.codigoAcesso = $localStorage.ultimoAcesso;
 	}
 	
-	$scope.enviarMsg = function(dono, id, data) {
+	$scope.enviarMsg = function(dono, id) {
 		bd_app.enviarMensagem(
 			$scope.corpoMsg,
 			dono,
-			id,
-			$scope.getData()
+			id
 		);
 
 		$scope.corpoMsg = '';
@@ -398,8 +396,8 @@ app.controller('chatController', ['$scope','bd_app','$localStorage','$rootScope'
 /*
 	SERVICE: BANCO DE DADOS
 */
-app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', '$window', 
-				function ($rootScope, $firebaseArray, $location, $localStorage, $window) {
+app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorage', '$window', '$filter', 
+				function ($rootScope, $firebaseArray, $location, $localStorage, $window, $filter) {
 	
 	var config = {
 		apiKey: "AIzaSyAJpKVSthdn_BD-E0jPdrIczzcJXGhKGp4",
@@ -424,6 +422,16 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 	this.mensagens = $firebaseArray(rootChat.child('Mensagens'));
 	this.rankingGuildas = $firebaseArray(rootContent.child('RankingGuildas'));
 	this.rankingJogadores = $firebaseArray(rootContent.child('RankingJogadores'));
+
+	this.ultimoUpdateGuildas = $firebaseArray(rootContent.child('UltimoUpdate').child('0'));
+	this.ultimoUpdateJogadores = $firebaseArray(rootContent.child('UltimoUpdate').child('1'));
+
+	$rootScope.ultimoUpdtGuildas = this.ultimoUpdateGuildas;
+	$rootScope.ultimoUpdtJogadores = this.ultimoUpdateJogadores;
+
+	this.getData = function() {
+		return $filter('date')(new Date(), "dd/MM/yyyy - HH:mm");
+	}
 	
 	this.getUnidadesMilitares = function() {
 		return this.unidadesMilitares;
@@ -470,13 +478,13 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 		}
 	}
 
-	this.enviarMensagem = function(corpo, dono, id, data) {
+	this.enviarMensagem = function(corpo, dono, id) {
 		
 		rootChat.child('Mensagens').push({
 			Corpo: corpo,
 			Dono: dono,
 			Id: id,
-			Data: data
+			Data: this.getData()
 		});
 	}
 
@@ -543,6 +551,11 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			Mundo: mundo,
 			Prestigio: prestigio
 		});
+
+		rootContent.child('UltimoUpdate').child('0').update({
+			"Data": this.getData()
+		});
+
 	};
 
 	this.editGuilda = function(id, nome, mundo, prestigio) {
@@ -551,10 +564,19 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			"Mundo": mundo,
 			"Prestigio": prestigio
 		});
+
+		rootContent.child('UltimoUpdate').child('0').update({
+			"Data": this.getData()
+		});
 	};
 
 	this.removeGuilda = function(id) {
+		rootContent.child('UltimoUpdate').child('0').update({
+			"Data": this.getData()
+		});
+
 		rootContent.child('RankingGuildas').child(id).set(null);
+
 	};
 
 	this.addJogador = function(nome, guilda, mundo, pontos, batalhas) {
@@ -564,6 +586,10 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			Mundo: mundo,
 			Pontos: pontos,
 			Batalhas: batalhas
+		});
+
+		rootContent.child('UltimoUpdate').child('1').update({
+			"Data": this.getData()
 		});
 	};
 
@@ -575,10 +601,19 @@ app.service('bd_app', ['$rootScope','$firebaseArray', '$location', '$localStorag
 			"Pontos": pontos,
 			"Batalhas": batalhas
 		});
+
+		rootContent.child('UltimoUpdate').child('1').update({
+			"Data": this.getData()
+		});
 	};
 
 	this.removeJogador = function(id) {
+		rootContent.child('UltimoUpdate').child('1').update({
+			"Data": this.getData()
+		});
+		
 		rootContent.child('RankingJogadores').child(id).set(null);
+
 	}
 
 	this.validaLogin = function(user) {
