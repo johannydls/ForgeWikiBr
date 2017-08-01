@@ -1,0 +1,39 @@
+<div>
+    <div class="text-center"><h1>Nova atualização</h1></div>
+    <br>
+    <div class="row">
+
+        <div class="col-md-12">
+            <form ng-submit="criarArtigo()">
+                <div class="row">
+                    <div class="col-md-7">
+                        <input type="text" placeholder="Título do artigo" ng-model="tituloArtigo" class="form-control" required>
+                    </div>
+                    <div class="col-md-5">
+                        <select ng-model="categoriaArtigo" class="form-control" placeholder="Categoria" required>
+                            <option value="Atualização">Atualização</option>
+                            <option value="Evento">Evento</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <br>
+                <input type="text" placeholder="Tags" ng-model="tagsArtigo" class="form-control">
+                <br>
+                <div text-angular ng-model="corpoArtigo"></div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary form-control" type="submit">Criar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-danger form-control" href="#!/admin/artigos">Cancelar</a>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+
+    </div>
+
+</div>
