@@ -9,7 +9,7 @@
             </thead>
 
             <tbody>
-                <tr dir-paginate="artigo in atualizacoes | itemsPerPage:10 | orderBy:'Data' | reverse">
+                <tr dir-paginate="artigo in atualizacoes | itemsPerPage:10 | reverse">
                     <td><a href="#!/atualizacoes/{{artigo.$id}}"><b>{{artigo.Titulo}}</b></a></td>
                     <td class="pull-right">{{artigo.Data}}</td>
                 </tr>

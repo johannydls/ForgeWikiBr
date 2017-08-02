@@ -1,0 +1,41 @@
+<div>
+    <div class="text-center"><h1>Editar Artigo</h1></div>
+    <br>
+    <div class="row">
+
+        <div class="col-md-12">
+            <form ng-submit="editarArtigo()">
+                <div class="row">
+                    <div class="col-md-7">
+                        <input type="text" placeholder="Título do artigo" ng-init="tituloArtigo = artigoDetalhe.Titulo" ng-model="tituloArtigo" class="form-control" required>
+                    </div>
+                    <div class="col-md-5">
+                        <select ng-model="categoriaArtigo" class="form-control" placeholder="Categoria" required>
+                            <option value="Atualização">Atualização</option>
+                            <option value="Evento">Evento</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <br>
+                <input type="text" placeholder="Tags" ng-init="tagsArtigo = artigoDetalhe.Tags" ng-model="tagsArtigo" class="form-control">
+                <br>
+
+                <textarea ui-tinymce="tinymceOptions" ng-init="corpoArtigo = artigoDetalhe.Corpo" ng-model="corpoArtigo"></textarea>
+
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary form-control" type="submit">Salvar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-danger form-control" href="#!/admin/artigos/gerenciarAtualizacoes">Cancelar</a>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+
+    </div>
+
+</div>

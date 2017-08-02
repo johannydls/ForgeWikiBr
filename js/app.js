@@ -83,14 +83,24 @@ app.config(function($routeProvider) {
         templateUrl: 'views/admin/artigos.html',
         controller: 'adminController'
     })
-    .when('/admin/artigos/novaAtualizacao', {
+    .when('/admin/artigos/novoArtigo', {
         title: 'Artigos - Nova Atualização',
-        templateUrl: 'views/admin/artigos/nova_atualizacao.html',
+        templateUrl: 'views/admin/artigos/novo_artigo.html',
         controller: 'adminController'
     })
     .when('/admin/artigos/gerenciarAtualizacoes', {
-        title: 'Artigos - Gerenciar Atualizações',
+        title: 'Artigos - Gerenciar Artigos',
         templateUrl: 'views/admin/artigos/listar_atualizacoes.html',
+        controller: 'adminController'
+    })
+    .when('/admin/artigos/gerenciarAtualizacoes/:id', {
+        title: 'Artigos - Editar Artigo',
+        templateUrl: 'views/admin/artigos/editar_atualizacao.html',
+        controller: 'adminController'
+    })
+    .when('/admin/artigos/gerenciarEventos', {
+        title: 'Artigos - Gerenciar Artigos',
+        templateUrl: 'views/admin/artigos/listar_eventos.html',
         controller: 'adminController'
     })
 
@@ -182,6 +192,7 @@ app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routePar
         $scope.listaUnidades = bd_app.getUnidadesMilitares();
 
         $scope.unidadeDetalhe = bd_app.getUnidade($routeParams.id);
+        $scope.unidadeDetalhe = $localStorage.unidadeDetalhe;
 
         $scope.toggleClass = function($event, className) {
             className = className || 'transparent';
@@ -273,8 +284,8 @@ app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routePar
                 'insertdatetime media nonbreaking save table contextmenu directionality',
                 'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
             ],
-            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+            toolbar2: 'preview link image media | forecolor backcolor emoticons | codesample help',
             image_advtab: true,
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
@@ -285,10 +296,8 @@ app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routePar
         
         
         $scope.atualizacoes = bd_app.getAtualizacoes();
-
-        $localStorage.artigoId = $routeParams.id;
-
-        $localStorage.artigoDetalhe = bd_app.getAtualizacao($localStorage.artigoId);
+        $scope.artigoId = $routeParams.id;
+        $scope.artigoDetalhe = bd_app.getAtualizacao($scope.atualizacoes, $routeParams.id);
         $scope.artigoDetalhe = $localStorage.artigoDetalhe;
 
         $scope.criarArtigo = function() {
@@ -300,6 +309,23 @@ app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routePar
             );
 
             $location.path('/admin/artigos');
+        }
+
+        $scope.editarArtigo = function() {
+            
+            bd_app.editarArtigo(
+                $scope.tituloArtigo,
+                $scope.categoriaArtigo,
+                $scope.tagsArtigo,
+                $scope.corpoArtigo,
+                $routeParams.id
+            );
+
+            $location.path('/admin/artigos/gerenciarAtualizacoes');
+        }
+
+        $scope.getArtigoEdit = function() {
+            bd_app.getAtualizacaoEdit($routeParams.id);
         }
     }
 ]);
@@ -652,6 +678,7 @@ app.service('bd_app', ['$rootScope', '$firebaseArray', '$location', '$localStora
         this.getUnidade = function(id) {
             for (i = 0; i < this.unidadesMilitares.length; i++) {
                 if (this.unidadesMilitares[i].$id == id) {
+                    $localStorage.unidadeDetalhe = this.unidadesMilitares[i];
                     return this.unidadesMilitares[i];
                 }
             }
@@ -770,17 +797,43 @@ app.service('bd_app', ['$rootScope', '$firebaseArray', '$location', '$localStora
 
          }
 
+         this.editarArtigo = function(titulo, categoria, tags, corpo, id) {
+            switch(categoria) {
+                case 'Atualização':
+                    rootContent.child('Postagens').child('Atualizacoes').child(id).update({
+                        "Titulo": titulo,
+                        "Categoria": categoria,
+                        "Tags": tags,
+                        "Corpo": corpo
+                    });
 
-         this.getAtualizacao = function(id) {
-            for (i = 0; i < this.atualizacoes.length; i++) {
-                if (this.atualizacoes[i].$id == id) {
-                    return this.atualizacoes[i];
+                case 'Evento':
+                    rootContent.child('Postagens').child('Evento').child(id).update({
+                        "Titulo": titulo,
+                        "Categoria": categoria,
+                        "Tags": tags,
+                        "Corpo": corpo
+                    });
+            }
+         }
+
+         this.getAtualizacao = function(array, id) {
+            for (i = 0; i < array.length; i++) {
+                if (array[i].$id == id) {
+                    $localStorage.artigoDetalhe = array[i];
+                    return array[i];
                 }
             }
-
-            console.log('Atualizacao encontrada ' + id);
         }
 
+        this.getAtualizacaoEdit = function(array, id) {
+            for (i = 0; i < array.length; i++) {
+                if (array[i].$id == id) {
+                    $localStorage.artigoDetalheEdit = array[i];
+                    return array[i];
+                }
+            }
+        }
 
         /**
          * SERVICE: LOGIN
@@ -867,8 +920,7 @@ app.run(function($rootScope, $location, $sessionStorage, $localStorage, $routePa
 
     $rootScope.$on('$locationChangeSuccess', function() {
         console.log('$locationChangeSuccess changed!', new Date());
-        $localStorage.artigoId = $routeParams.id;
-        $localStorage.artigoDetalhe = bd_app.getAtualizacao($localStorage.artigoId);
+        //$localStorage.atualizacoes = bd_app.getAtualizacoes();
     });
 
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
