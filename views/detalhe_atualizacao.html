@@ -1,10 +1,10 @@
-<div>
-    
+<div ng-init="guardarArtigoStorage()">
+    <a href="#!/atualizacoes" class="btn btn-default">Voltar</a>
     <h1>{{artigoDetalhe.Titulo}}</h1>
     <sup class="pull-right">{{artigoDetalhe.Data}}</sup>
 
     <br>
 
-    <div ng-bind-html='artigoDetalhe.Corpo'</div>
+    <div class="corpo-artigo" ng-bind-html='artigoDetalhe.Corpo'></div>
 
 </div>

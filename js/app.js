@@ -3,10 +3,9 @@ var app = angular.module('foe-wiki', ['ngRoute',
     'firebase',
     'ngStorage',
     'luegg.directives',
+    'ui.tinymce',
     'textAngular'
 ]);
-
-
 
 /*
 	CONFIG: ROTAS
@@ -150,8 +149,8 @@ app.config(function($routeProvider) {
 /*
 	CONTROLLER: ADMINISTRAÇÃO
 */
-app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routeParams', '$location', 'bd_app',
-    function($scope, $rootScope, $filter, $routeParams, $location, bd_app) {
+app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routeParams', '$location', 'bd_app', '$localStorage',
+    function($scope, $rootScope, $filter, $routeParams, $location, bd_app, $localStorage) {
 
         /*
         	ADMIN: UNIDADES MILITARES
@@ -264,9 +263,33 @@ app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routePar
             ADMIN: NOVA ATUALIZAÇÃO
         */
 
+        $scope.tinymceOptions = {
+            selector: 'textarea',
+            height: 500,
+            theme: 'modern',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+            image_advtab: true,
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+            ]
+        };
+
+        
+        
         $scope.atualizacoes = bd_app.getAtualizacoes();
 
-        $scope.artigoDetalhe = bd_app.getAtualizacao($routeParams.id);
+        $localStorage.artigoId = $routeParams.id;
+
+        $localStorage.artigoDetalhe = bd_app.getAtualizacao($localStorage.artigoId);
+        $scope.artigoDetalhe = $localStorage.artigoDetalhe;
 
         $scope.criarArtigo = function() {
             bd_app.criarArtigo(
@@ -278,8 +301,6 @@ app.controller('adminController', ['$scope', '$rootScope', '$filter', '$routePar
 
             $location.path('/admin/artigos');
         }
-
-
     }
 ]);
 
@@ -756,6 +777,8 @@ app.service('bd_app', ['$rootScope', '$firebaseArray', '$location', '$localStora
                     return this.atualizacoes[i];
                 }
             }
+
+            console.log('Atualizacao encontrada ' + id);
         }
 
 
@@ -821,11 +844,11 @@ app.directive('ngEnter', function() {
     };
 });
 
-app.run(function($rootScope, $location, $sessionStorage, $localStorage) {
+app.run(function($rootScope, $location, $sessionStorage, $localStorage, $routeParams, bd_app) {
 
     $rootScope.usuarioLogado = $localStorage.usuarioLogado;
     $rootScope.usuarioChatId = $localStorage.usuarioChatId;
-
+    
     var rotasBloqueadasNaoLogados = ['/admin'];
 
     var rotasBloqueadasLogados = [];
@@ -839,9 +862,16 @@ app.run(function($rootScope, $location, $sessionStorage, $localStorage) {
         }
 
         $rootScope.usuarioChatId = $localStorage.usuarioChatId;
+        
+    });
+
+    $rootScope.$on('$locationChangeSuccess', function() {
+        console.log('$locationChangeSuccess changed!', new Date());
+        $localStorage.artigoId = $routeParams.id;
+        $localStorage.artigoDetalhe = bd_app.getAtualizacao($localStorage.artigoId);
     });
 
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
-        $rootScope.title = current.$$route.title;
+        $rootScope.title = current.$$route.title;  
     });
 });

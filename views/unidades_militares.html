@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-xs-6">
 			<div class="form-group">
-				<select ng-model="filtroEra" class="form-control">
+				<select ng-model="filtroEra.Era" class="form-control">
 					<option value="">Todas as Eras</option>
 					<option value="Sem era definida" default>Sem era definida</option>
 					<option value="Idade do Bronze">Idade do Bronze</option>
@@ -132,7 +132,7 @@
 <div class="listaDeItens">
 	<ul>
 
-		<li dir-paginate="unidade in filtro = (unidadesMilitares | filter:filtroEra | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade) | itemsPerPage: 3">
+		<li dir-paginate="unidade in filtro = (unidadesMilitares | filter:filtroEra:true | filter:filtroUnidade | filter:filterNome | orderBy:'Nome' | filter:filtroBonus | filter:filtroHabilidade) | itemsPerPage: 3">
 
 			
 			<div class="card text-center">
